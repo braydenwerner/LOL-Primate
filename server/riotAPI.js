@@ -1,39 +1,65 @@
 const axios = require('axios')
 
 const getBySummonerName = async (summonerName) => {
-  const res = await axios.get(
-    `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.RIOT_API_KEY}`
-  )
-  return res.data
+  try {
+    const res = await axios.get(
+      encodeURI(
+        `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.RIOT_API_KEY}`
+      )
+    )
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const getLeagueEntriesForSummoner = async (summonerID) => {
-  const res = await axios.get(
-    `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerID}?api_key=${process.env.RIOT_API_KEY}`
-  )
-  return res.data
+  try {
+    const res = await axios.get(
+      encodeURI(
+        `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerID}?api_key=${process.env.RIOT_API_KEY}`
+      )
+    )
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const getMatchIDs = async (puuid) => {
-  const res = await axios.get(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${process.env.RIOT_API_KEY}`
-  )
-  return res.data
+  try {
+    const res = await axios.get(
+      encodeURI(
+        `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${process.env.RIOT_API_KEY}`
+      )
+    )
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const getMatchData = async (matchID) => {
-  const res = await axios.get(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/${matchID}?api_key=${process.env.RIOT_API_KEY}`
-  )
-  return res.data
+  try {
+    const res = await axios.get(
+      encodeURI(
+        `https://americas.api.riotgames.com/lol/match/v5/matches/${matchID}?api_key=${process.env.RIOT_API_KEY}`
+      )
+    )
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-//   function gets data from three APIs and appends the data
-//  into one object
+//  append responses into single object
 const getSummonerData = async (summonerNames) => {
   const summonerData = {}
   for (summonerName of summonerNames) {
     const profileData = await getBySummonerName(summonerName)
+    if (!profileData) {
+      return { error: 'Input contains an invalid summoner name!' }
+    }
 
     const rankedData = (
       await getLeagueEntriesForSummoner(profileData.id)
@@ -51,9 +77,13 @@ const getSummonerMatchData = async (summonerPUUIDs) => {
   const matchData = {}
   for (PUUID of summonerPUUIDs) {
     const matchIDs = await getMatchIDs(PUUID)
+    if (!matchIDs) return { error: 'Invalid match IDs' }
 
     for (const matchID of matchIDs) {
       matchData[matchID] = await getMatchData(matchID)
+      if (!matchData) {
+        return { error: 'Invalid match data' }
+      }
     }
   }
   return matchData

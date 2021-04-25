@@ -13,7 +13,7 @@ ${({ theme }) => css`
 
       #root {
         background: ${(theme as any).colors.background};
-        color: ${(theme as any).colors.black};
+        color: ${(theme as any).colors.primaryText};
         height: 100%;
       }
     }

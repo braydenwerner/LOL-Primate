@@ -1,2 +1,19 @@
+#champ-selected-main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+}
+
 #champ-select-paste-textarea {
+  width: 400px;
+  height: 150px;
+  resize: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.summoner-data-container {
+  text-align: center;
+  font-size: 15px;
 }
