@@ -1,7 +1,6 @@
 const axios = require('axios')
 
 const getBySummonerName = async (summonerName) => {
-  count++
   const res = await axios.get(
     `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.RIOT_API_KEY}`
   )
@@ -49,7 +48,6 @@ const getSummonerData = async (summonerNames) => {
 }
 
 const getSummonerMatchData = async (summonerPUUIDs) => {
-  console.log('key: ', process.env.RIOT_API_KEY)
   const matchData = {}
   for (PUUID of summonerPUUIDs) {
     const matchIDs = await getMatchIDs(PUUID)
