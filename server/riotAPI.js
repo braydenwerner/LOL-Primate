@@ -26,24 +26,11 @@ const getLeagueEntriesForSummoner = async (summonerID) => {
   }
 }
 
-const getMatchIDs = async (puuid) => {
+const getMatchOverview = async (encryptedAccountId) => {
   try {
     const res = await axios.get(
       encodeURI(
-        `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${process.env.RIOT_API_KEY}`
-      )
-    )
-    return res.data
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-const getMatchData = async (matchID) => {
-  try {
-    const res = await axios.get(
-      encodeURI(
-        `https://americas.api.riotgames.com/lol/match/v5/matches/${matchID}?api_key=${process.env.RIOT_API_KEY}`
+        `https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/${encryptedAccountId}?queue=420&endIndex=100&beginIndex=0&api_key=${process.env.RIOT_API_KEY}`
       )
     )
     return res.data
@@ -73,20 +60,21 @@ const getSummonerData = async (summonerNames) => {
   return summonerData
 }
 
-const getSummonerMatchData = async (summonerPUUIDs) => {
+//  gets 100 most recent ranked matches from all 5 teammates
+const getSummonerMatchOverviews = async (encryptedAccountIds) => {
   const matchData = {}
-  for (PUUID of summonerPUUIDs) {
-    const matchIDs = await getMatchIDs(PUUID)
-    if (!matchIDs) return { error: 'Invalid match IDs' }
-
-    for (const matchID of matchIDs) {
-      matchData[matchID] = await getMatchData(matchID)
-      if (!matchData) {
-        return { error: 'Invalid match data' }
-      }
-    }
+  for (id of encryptedAccountIds) {
+    const matchOverview = await getMatchOverview(id)
+    if (!matchOverview || !matchOverview.matches) continue
+    matchData[id] = matchOverview.matches
   }
   return matchData
 }
 
-module.exports = { getSummonerData, getSummonerMatchData }
+const getSummonerMasteryData = async (summonerID) => {}
+
+module.exports = {
+  getSummonerData,
+  getSummonerMatchOverviews,
+  getSummonerMasteryData
+}

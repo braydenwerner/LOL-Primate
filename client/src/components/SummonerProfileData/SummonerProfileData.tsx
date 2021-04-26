@@ -23,21 +23,19 @@ export const SummonerProfileData: React.FC<SummonerProfileDataProps> = ({
     100
 
   return (
-    <Grid className="summoner-data-container" item xs={2}>
-      <div
-        style={{
-          color: `${(theme as any)[themeMode].colors.primaryText}`
-        }}
-      >
-        {summoner.name}
-        <div>{summoner.tier}</div>
-        {summoner.rank}
-        {summoner.leaguePoints}
-        <div>{winrate}%</div>
-        <div> {summoner.wins}</div>
-        {summoner.losses}
-        {summoner.level}
-      </div>
-    </Grid>
+    <div
+      style={{
+        color: `${(theme as any)[themeMode].colors.primaryText}`
+      }}
+    >
+      {summoner.name}
+      <div>{summoner.tier}</div>
+      {summoner.rank}
+      {summoner.leaguePoints}
+      <div>{winrate}%</div>
+      <div> {summoner.wins}</div>
+      {summoner.losses}
+      {summoner.level}
+    </div>
   )
 }
