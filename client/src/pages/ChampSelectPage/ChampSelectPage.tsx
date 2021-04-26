@@ -1,15 +1,14 @@
-import React, { useRef, useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Grid, TextField } from '@material-ui/core'
 
 import { ThemeContext } from '../../AppProvider'
 import { theme } from '../../styles/exports'
+import { SummonerProfileData } from '../../components/exports'
 
 import './ChampSelectPage.scss'
 
 export const ChampSelectPage: React.FC = () => {
   const { themeMode }: any = useContext(ThemeContext as any)
-
-  const textRef = useRef<any>(null)
 
   const [summonerNames, setSummonerNames] = useState<string[]>([])
   const [summonerData, setSummonerData] = useState<any>([])
@@ -20,9 +19,11 @@ export const ChampSelectPage: React.FC = () => {
     if (summonerNames.length === 5) querySummonerData(summonerNames)
   }, [summonerNames])
 
-  const handleTextChange = () => {
-    if (!textRef.current) return
-    let value = textRef.current.value
+  const handleTextChange = (e: any) => {
+    if (!e.target.value) return
+    let value = e.target.value
+
+    console.log(value)
 
     const parsedSummonerNames = []
     let lines = value.split('\n')
@@ -56,10 +57,11 @@ export const ChampSelectPage: React.FC = () => {
       currentSummonerName.trimEnd()
       parsedSummonerNames.push(currentSummonerName)
     }
+    console.log(parsedSummonerNames)
 
     if (parsedSummonerNames.length === 5) {
       console.log(parsedSummonerNames)
-      textRef.current.value = ''
+      e.target.value = ''
       setSummonerNames(parsedSummonerNames)
     }
   }
@@ -87,54 +89,29 @@ export const ChampSelectPage: React.FC = () => {
       <div id="champ-selected-main-container">
         <TextField
           id="champ-select-paste-textarea"
-          ref={textRef}
           multiline
           onChange={handleTextChange}
           rowsMax={5}
-          InputLabelProps={{
-            shrink: true
-          }}
-          placeholder="xtremesoccer2012 joined the lobby
-          mineturtle20 joined the lobby
-          lokimonsta joined the lobby
-          arotheawesome joined the lobby
-          placerwiz joined the lobby"
+          placeholder={
+            'xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby\n'
+          }
           style={{
             backgroundColor: `${(theme as any)[themeMode].colors.secondary}`
           }}
         />
-        <button onClick={() => querySummonerData(['xtdasdweqeqr'])}>
-          Click
-        </button>
         <Grid container direction="row" justify="center">
           {summonerData &&
-            Object.keys(summonerData).map((summonerObjKey) => {
-              return (
-                <Grid
-                  className="summoner-data-container"
-                  item
-                  xs={3}
-                  spacing={5}
-                >
-                  {Object.keys(summonerData[summonerObjKey]).map(
-                    (key: string, i: number) => {
-                      return (
-                        <div
-                          key={i}
-                          style={{
-                            color: `${
-                              (theme as any)[themeMode].colors.primaryText
-                            }`
-                          }}
-                        >
-                          {key}: {summonerData[summonerObjKey][key] + ''}
-                        </div>
-                      )
-                    }
-                  )}
-                </Grid>
-              )
-            })}
+            Object.keys(summonerData).map(
+              (summonerObjKey: string, i: number) => {
+                return (
+                  <SummonerProfileData
+                    key={i}
+                    summonerData={summonerData}
+                    summonerObjKey={summonerObjKey}
+                  />
+                )
+              }
+            )}
         </Grid>
       </div>
     </>
