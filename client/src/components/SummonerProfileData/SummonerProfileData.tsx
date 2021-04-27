@@ -19,7 +19,7 @@ export const SummonerProfileData: React.FC<SummonerProfileDataProps> = ({
 
   const summoner = summonerData[summonerObjKey]
   const winrate =
-    Math.round((summoner.wins / (summoner.wins + summoner.losses)) * 10000) /
+    Math.round((summoner.wins / (summoner.wins + summoner.losess)) * 10000) /
     100
 
   return (
@@ -29,13 +29,13 @@ export const SummonerProfileData: React.FC<SummonerProfileDataProps> = ({
       }}
     >
       {summoner.name}
-      <div>{summoner.tier}</div>
-      {summoner.rank}
-      {summoner.leaguePoints}
-      <div>{winrate}%</div>
-      <div> {summoner.wins}</div>
-      {summoner.losses}
-      {summoner.level}
+      <div>tier: {summoner.tier}</div>
+      <div>rank: {summoner.rank}</div>
+      <div>lp: {summoner.leaguePoints}</div>
+      <div>winrate: {winrate}%</div>
+      <div>wins: {summoner.wins}</div>
+      <div>losess: {summoner.losses}</div>
+      <div>Summoner level: {summoner.summonerLevel}</div>
     </div>
   )
 }

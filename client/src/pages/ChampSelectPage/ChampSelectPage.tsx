@@ -3,7 +3,7 @@ import { Grid, TextField } from '@material-ui/core'
 
 import { ThemeContext } from '../../AppProvider'
 import { theme } from '../../styles/exports'
-import { convertChampId } from '../../util/util'
+import { convertChampId } from '../../api/datadragonAPI'
 import { RoleChampionData, SummonerProfileData } from '../../components/exports'
 
 import './ChampSelectPage.scss'
@@ -32,7 +32,7 @@ export const ChampSelectPage: React.FC = () => {
   }, [matchOverviewData])
 
   const populateMatchData = async () => {
-    if (Object.keys(matchOverviewData).length === 5) {
+    if (Object.keys(matchOverviewData).length > 0) {
       const tempMostCommonLanes: any = {}
       const tempMostCommonChamps: any = {}
 
@@ -46,15 +46,14 @@ export const ChampSelectPage: React.FC = () => {
             matchOverviewData[id][matchObj].champion
           )
 
-          if (lane === 'BOT') {
+          if (lane === 'BOTTOM') {
             if (role === 'DUO_SUPPORT') {
               if ('SUPPORT' in laneFreq) laneFreq['SUPPORT']++
               else laneFreq['SUPPORT'] = 1
-            } else if (role === 'DUO_ADC') {
+            } else if (role === 'DUO_CARRY') {
               if ('ADC' in laneFreq) laneFreq['ADC']++
               else laneFreq['ADC'] = 1
             }
-
             continue
           }
 
@@ -145,7 +144,6 @@ export const ChampSelectPage: React.FC = () => {
     for (const id in summonerObj) {
       encryptedAccountIds.push(summonerObj[id].accountId)
     }
-    console.log(encryptedAccountIds)
 
     const res = await fetch('http://localhost:4000/getSummonerMatchOverviews', {
       method: 'POST',
@@ -171,18 +169,21 @@ export const ChampSelectPage: React.FC = () => {
             'xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby\n'
           }
           style={{
-            backgroundColor: `${(theme as any)[themeMode].colors.secondary}`
+            color: `${(theme as any)[themeMode].colors.secondary}`,
+            backgroundColor: `${(theme as any)[themeMode].colors.textColor}`
           }}
         />
-        <Grid container direction="row" justify="center">
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          style={{ marginTop: '20px' }}
+        >
           {summonerData &&
             mostCommonLanes &&
             mostCommonChampions &&
             Object.keys(summonerData).map(
               (summonerObjKey: string, i: number) => {
-                // console.log(
-                //   mostCommonChampions[summonerData[summonerObjKey].accountId]
-                // )
                 return (
                   <Grid className="summoner-data-container" item xs={2} key={i}>
                     <SummonerProfileData
