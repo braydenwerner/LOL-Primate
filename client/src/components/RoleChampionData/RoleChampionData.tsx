@@ -23,6 +23,7 @@ export const RoleChampionData: React.FC<RoleChampionDataProps> = ({
   useEffect(() => {
     const tempMostCommonChampArr: any = []
     const tempMostCommonLanesArr: any = []
+
     if (mostCommonChampions && Object.keys(mostCommonChampions).length > 0) {
       for (const champ in mostCommonChampions) {
         tempMostCommonChampArr.push([champ, mostCommonChampions[champ]])

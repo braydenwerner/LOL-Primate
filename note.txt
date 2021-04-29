@@ -1,0 +1,59 @@
+-getStaticProps(), fetch at build time
+-getServerSideProps, every request
+-getStaticPaths, dynamically generate paths based on data
+
+export async fuction getStaticProps(context) {
+    return {
+        props: {}, //   will be passed to the page component as props
+    }
+}
+
+export async function getStaticProps(context) {
+  const res = await fetch(`https://.../data`)
+  const data = await res.json()
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  }
+}
+
+FOR TYPESCRIPT
+import { GetStaticProps } from 'next'
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  // ...
+
+
+import { InferGetStaticPropsType } from 'next'
+
+type Post = {
+  author: string
+  content: string
+}
+
+export const getStaticProps = async () => {
+  const res = await fetch('https://.../posts')
+  const posts: Post[] = await res.json()
+
+  return {
+    props: {
+      posts,
+    },
+  }
+}
+
+function Blog({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // will resolve posts to type Post[]
+}
+
+export default Blog
+}
+
+
+
