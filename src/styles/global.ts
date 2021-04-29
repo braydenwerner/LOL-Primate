@@ -9,8 +9,8 @@ ${({ theme }) => css`
       flex-direction: column;
       height: 100%;
       margin: 0;
-      background: ${(theme as any).colors.background};
-      color: ${(theme as any).colors.primaryText};
+      background: ${theme.colors.background};
+      color: ${theme.colors.primaryText};
     }
   }
 `}

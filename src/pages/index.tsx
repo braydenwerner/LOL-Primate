@@ -1,9 +1,10 @@
 import ChampSelectPage from './ChampSelectPage'
 import { ThemeToggle } from '../components/elements'
 
-export default () => (
+const Index: React.FC = () => (
   <>
     <ThemeToggle />
     <ChampSelectPage />
   </>
 )
+export default Index

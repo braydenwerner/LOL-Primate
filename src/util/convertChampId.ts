@@ -14,8 +14,8 @@ export const convertChampId = async (champId: string) => {
       version +
       '/data/de_DE/champion.json'
   )
-  let list = await res.json()
-  let championList = list.data
+  const list = await res.json()
+  const championList = list.data
 
   for (const i in championList) {
     if (championList[i].key == champId) {

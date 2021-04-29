@@ -158,11 +158,6 @@ const ChampSelectPage: React.FC = () => {
         multiline
         onChange={handleTextChange}
         rowsMax={5}
-        InputProps={{
-          multilineColor: {
-            color: 'red'
-          }
-        }}
         placeholder={
           'xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby\n'
         }

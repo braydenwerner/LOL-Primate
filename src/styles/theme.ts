@@ -5,8 +5,8 @@ export default {
       secondary: '#DBDBDB',
       primaryText: 'black',
       contrastBackground: '#cc3399',
-      contrastText: '#EAEAEA'
-    }
+      contrastText: '#EAEAEA',
+    },
   },
   dark: {
     colors: {
@@ -14,7 +14,7 @@ export default {
       secondary: '#333B47',
       primaryText: 'white',
       contrastBackground: '#EAEAEA',
-      contrastText: '#181A1B'
-    }
-  }
+      contrastText: '#181A1B',
+    },
+  },
 }
