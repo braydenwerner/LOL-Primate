@@ -1,19 +1,25 @@
-import React, { useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { Grid } from '@material-ui/core'
+import { Summoner } from '../../../pages/ChampSelectPage'
 
 interface SummonerProfileCardProps {
-  summonerData: any
-  summonerObjKey: string
+  summoner: Summoner
 }
 
 export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
-  summonerData,
-  summonerObjKey
+  summoner,
 }) => {
-  const summoner = summonerData[summonerObjKey]
-  const winrate =
-    Math.round((summoner.wins / (summoner.wins + summoner.losess)) * 10000) /
-    100
+  const [winrate, setWinrate] = useState<number>()
+
+  useEffect(() => {
+    if (summoner.wins && summoner.losses) {
+      setWinrate(
+        Math.round(
+          (summoner.wins / (summoner.wins + summoner.losses)) * 10000,
+        ) / 100,
+      )
+    }
+  }, [summoner])
 
   return (
     <div>

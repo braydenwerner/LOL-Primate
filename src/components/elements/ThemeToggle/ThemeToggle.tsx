@@ -5,7 +5,7 @@ import Switch from 'react-switch'
 import { ThemeContext } from '../../../providers/AppProvider'
 
 export const ThemeToggle: React.FC = () => {
-  const { toggleTheme, themeMode } = useContext(ThemeContext as any)
+  const { toggleTheme, themeMode } = useContext(ThemeContext)
 
   const handleThemeChange = () => {
     toggleTheme()
@@ -27,7 +27,7 @@ export const ThemeToggle: React.FC = () => {
             alignItems: 'center',
             height: '100%',
             fontSize: 18,
-            paddingLeft: 5
+            paddingLeft: 5,
           }}
           color={themeMode === 'light' ? 'white' : 'grey'}
         />
@@ -40,7 +40,7 @@ export const ThemeToggle: React.FC = () => {
             alignItems: 'center',
             height: '100%',
             fontSize: 18,
-            paddingLeft: 14
+            paddingLeft: 14,
           }}
           color={themeMode === 'dark' ? 'blue' : 'blue'}
         />
