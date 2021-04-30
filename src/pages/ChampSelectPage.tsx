@@ -84,17 +84,7 @@ const ChampSelectPage: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (summonerNames.length === 5) querySummonerData(summonerNames)
-  }, [summonerNames])
-
-  //  if the match data exists for each player, calculate most common champs,
-  //  most common roles,
-  //  ex: mostCommonChampions[id] = {2: 9, 5: 4} -> champion of id 2, played 9 times
-  useEffect(() => {
-    if (Object.keys(matchOverviewData).length > 0) populateMatchData()
-  }, [matchOverviewData])
-
-  const querySummonerData = async (summonerNames: string[]) => {
+    const querySummonerData = async (summonerNames: string[]) => {
     const res = await fetch(`${URL}/getSummonerData`, {
       method: 'POST',
       headers: {
@@ -133,8 +123,14 @@ const ChampSelectPage: React.FC = () => {
     const matchDataObj = await res.json()
     setMatchOverviewData(matchDataObj)
   }
+    if (summonerNames.length === 5) querySummonerData(summonerNames)
+  }, [summonerNames])
 
-  const populateMatchData = async () => {
+  //  if the match data exists for each player, calculate most common champs,
+  //  most common roles,
+  //  ex: mostCommonChampions[id] = {2: 9, 5: 4} -> champion of id 2, played 9 times
+  useEffect(() => {
+    const populateMatchData = async () => {
     console.log(matchOverviewData)
     const tempMostCommonLanes: MostCommonLanes = {}
     const tempMostCommonChamps: MostCommonChampions = {}
@@ -173,7 +169,10 @@ const ChampSelectPage: React.FC = () => {
 
     setMostCommonLanes(tempMostCommonLanes)
     setMostCommonChampions(tempMostCommonChamps)
-  }
+    }
+    
+    if (Object.keys(matchOverviewData).length > 0) populateMatchData()
+  }, [matchOverviewData])
 
   const handleTextChange = (
     e: React.ChangeEvent<HTMLInputElement>,

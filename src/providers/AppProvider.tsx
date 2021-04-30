@@ -11,7 +11,6 @@ export const ThemeContext = createContext({
 export const AppProvider: React.FC = ({ children }) => {
   const [themeMode, setThemeMode] = useState<string>('light')
   const currentTheme = (theme as any)[themeMode]
-  console.log(currentTheme)
 
   useEffect(() => {
     setThemeMode(localStorage.getItem('theme') || 'light')
