@@ -8,5 +8,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </AppProvider>
   )
 }
-
 export default MyApp

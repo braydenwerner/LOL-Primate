@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
 import { Summoner } from '../../../pages/ChampSelectPage';
 
 interface SummonerProfileCardProps {

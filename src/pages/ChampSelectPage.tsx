@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core'
 import styled from 'styled-components'
 
 import { SummonerStats } from '../components/modules/index'
-import { convertChampId } from '../util/convertChampId'
+import { convertChampId, getAPIVersion } from '../util/convertChampId'
 import { URL } from '../config/config'
 
 export interface SummonerData {
@@ -48,18 +48,18 @@ export interface Match {
 }
 
 export interface MostCommonChampions {
-  [id: string]: Champions
+  [id: string]: Champion
 }
 
-export interface Champions {
+export interface Champion {
   [champion: string]: number
 }
 
 export interface MostCommonLanes {
-  [id: string]: Lanes
+  [id: string]: Lane
 }
 
-export interface Lanes {
+export interface Lane {
   [lane: string]: number
 }
 
@@ -78,6 +78,10 @@ const ChampSelectPage: React.FC = () => {
     mostCommonLanes,
     setMostCommonLanes,
   ] = useState<MostCommonLanes>({})
+
+  useEffect(() => {
+    getAPIVersion()
+  }, [])
 
   useEffect(() => {
     if (summonerNames.length === 5) querySummonerData(summonerNames)
@@ -136,8 +140,8 @@ const ChampSelectPage: React.FC = () => {
     const tempMostCommonChamps: MostCommonChampions = {}
 
     for (const id in matchOverviewData) {
-      const laneFreq: Lanes = {}
-      const champFreq: Champions = {}
+      const laneFreq: Lane = {}
+      const champFreq: Champion = {}
       for (const matchObj in matchOverviewData[id]) {
         const lane = matchOverviewData[id][matchObj].lane
         const role = matchOverviewData[id][matchObj].role
@@ -241,7 +245,7 @@ export default ChampSelectPage
 const StyledTextField = styled(TextField)`
   width: 600px;
   background-color: ${(props) =>
-    props.theme.colors.contrastBackground};
+    props.theme.contrastBackground};
   color: blue;
 `
 
