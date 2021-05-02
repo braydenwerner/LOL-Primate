@@ -1,4 +1,3 @@
-// import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { TextField } from '@material-ui/core'
 import styled from 'styled-components'
@@ -229,7 +228,7 @@ const ChampSelectPage: React.FC = () => {
           'xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby\n'
         }
       />
-      {summonerData && mostCommonLanes && mostCommonChampions && (
+      {summonerData && (
         <SummonerStats
           summonerData={summonerData}
           mostCommonLanes={mostCommonLanes}

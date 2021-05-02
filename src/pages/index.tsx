@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import ChampSelectPage from './ChampSelectPage'
 import { ThemeToggle } from '../components/elements'
 
