@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   RoleChampionCard,
   SummonerProfileCard,
@@ -15,7 +16,7 @@ interface SummonerStatsProps {
   mostCommonChampions: MostCommonChampions
 }
 
-export const SummonerStats: React.FC<SummonerStatsProps> = ({
+export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
   summonerData,
   mostCommonLanes,
   mostCommonChampions,
@@ -57,4 +58,5 @@ export const SummonerStats: React.FC<SummonerStatsProps> = ({
       )}
     </Grid>
   )
-}
+})
+SummonerStats.displayName = 'SummonerStats'

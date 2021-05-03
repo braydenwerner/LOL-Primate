@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { TextField } from '@material-ui/core'
+import { BounceLoader, BarLoader, BeatLoader } from 'react-spinners'
 import styled from 'styled-components'
 
 import { SummonerStats } from '../components/modules/index'
@@ -63,6 +63,9 @@ export interface Lane {
 }
 
 const ChampSelectPage: React.FC = () => {
+  const [showInput, setShowInput] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [summonerNames, setSummonerNames] = useState<string[]>([])
   const [summonerData, setSummonerData] = useState<SummonerData>({})
   const [
@@ -84,44 +87,45 @@ const ChampSelectPage: React.FC = () => {
 
   useEffect(() => {
     const querySummonerData = async (summonerNames: string[]) => {
-    const res = await fetch(`${URL}/getSummonerData`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ summonerNames }),
-    })
-    const summonerObj = await res.json()
-    if (summonerObj.error) {
-      alert(summonerObj.error)
-      return
+      setIsLoading(true)
+      const res = await fetch(`${URL}/getSummonerData`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ summonerNames }),
+      })
+      const summonerObj = await res.json()
+      if (summonerObj.error) {
+        alert(summonerObj.error)
+        return
+      }
+
+      console.log(summonerObj)
+      setSummonerData(summonerObj)
+
+      //  after the summoner data is collected, get match data for each
+      queryMatchOverview(summonerObj)
     }
 
-    console.log(summonerObj)
-    setSummonerData(summonerObj)
+    const queryMatchOverview = async (summonerObj: SummonerData) => {
+      const encryptedAccountIds = []
+      for (const id in summonerObj) {
+        encryptedAccountIds.push(summonerObj[id].accountId)
+      }
 
-    //  after the summoner data is collected, get match data for each
-    queryMatchOverview(summonerObj)
-  }
-
-  const queryMatchOverview = async (summonerObj: SummonerData) => {
-    const encryptedAccountIds = []
-    for (const id in summonerObj) {
-      encryptedAccountIds.push(summonerObj[id].accountId)
+      const res = await fetch(`${URL}/getSummonerMatchOverviews`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ encryptedAccountIds }),
+      })
+      const matchDataObj = await res.json()
+      setMatchOverviewData(matchDataObj)
     }
-
-    const res = await fetch(`${URL}/getSummonerMatchOverviews`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ encryptedAccountIds }),
-    })
-    const matchDataObj = await res.json()
-    setMatchOverviewData(matchDataObj)
-  }
     if (summonerNames.length === 5) querySummonerData(summonerNames)
   }, [summonerNames])
 
@@ -130,51 +134,54 @@ const ChampSelectPage: React.FC = () => {
   //  ex: mostCommonChampions[id] = {2: 9, 5: 4} -> champion of id 2, played 9 times
   useEffect(() => {
     const populateMatchData = async () => {
-    console.log(matchOverviewData)
-    const tempMostCommonLanes: MostCommonLanes = {}
-    const tempMostCommonChamps: MostCommonChampions = {}
+      console.log(matchOverviewData)
+      const tempMostCommonLanes: MostCommonLanes = {}
+      const tempMostCommonChamps: MostCommonChampions = {}
 
-    for (const id in matchOverviewData) {
-      const laneFreq: Lane = {}
-      const champFreq: Champion = {}
-      for (const matchObj in matchOverviewData[id]) {
-        const lane = matchOverviewData[id][matchObj].lane
-        const role = matchOverviewData[id][matchObj].role
-        const champion: string = await convertChampId(
-          matchOverviewData[id][matchObj].champion,
-        )
+      for (const id in matchOverviewData) {
+        const laneFreq: Lane = {}
+        const champFreq: Champion = {}
+        for (const matchObj in matchOverviewData[id]) {
+          const lane = matchOverviewData[id][matchObj].lane
+          const role = matchOverviewData[id][matchObj].role
+          const champion: string = await convertChampId(
+            matchOverviewData[id][matchObj].champion,
+          )
 
-        if (lane === 'BOTTOM') {
-          if (role === 'DUO_SUPPORT') {
-            if ('SUPPORT' in laneFreq) laneFreq['SUPPORT']++
-            else laneFreq['SUPPORT'] = 1
-          } else if (role === 'DUO_CARRY') {
-            if ('ADC' in laneFreq) laneFreq['ADC']++
-            else laneFreq['ADC'] = 1
+          if (lane === 'BOTTOM') {
+            if (role === 'DUO_SUPPORT') {
+              if ('SUPPORT' in laneFreq) laneFreq['SUPPORT']++
+              else laneFreq['SUPPORT'] = 1
+            } else if (role === 'DUO_CARRY') {
+              if ('ADC' in laneFreq) laneFreq['ADC']++
+              else laneFreq['ADC'] = 1
+            }
+            continue
           }
-          continue
+
+          if (lane in laneFreq) laneFreq[lane]++
+          else laneFreq[lane] = 1
+
+          if (champion in champFreq) champFreq[champion]++
+          else champFreq[champion] = 1
         }
 
-        if (lane in laneFreq) laneFreq[lane]++
-        else laneFreq[lane] = 1
-
-        if (champion in champFreq) champFreq[champion]++
-        else champFreq[champion] = 1
+        tempMostCommonLanes[id] = { ...laneFreq }
+        tempMostCommonChamps[id] = { ...champFreq }
       }
 
-      tempMostCommonLanes[id] = { ...laneFreq }
-      tempMostCommonChamps[id] = { ...champFreq }
+      setMostCommonLanes(tempMostCommonLanes)
+      setMostCommonChampions(tempMostCommonChamps)
+      setIsLoading(false)
+      setIsLoaded(true)
+      setShowInput(false)
     }
 
-    setMostCommonLanes(tempMostCommonLanes)
-    setMostCommonChampions(tempMostCommonChamps)
-    }
-    
     if (Object.keys(matchOverviewData).length > 0) populateMatchData()
   }, [matchOverviewData])
 
   const handleTextChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     if (!e.target.value) return
 
@@ -220,15 +227,25 @@ const ChampSelectPage: React.FC = () => {
 
   return (
     <Wrapper>
-      <StyledTextField
-        multiline
-        onChange={handleTextChange}
-        rowsMax={5}
-        placeholder={
-          'xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby\n'
-        }
-      />
-      {summonerData && (
+      {isLoading && (
+        <LoadingContainer>
+          <div>Retrieving Summoner Data</div>
+          <BarLoader color={'red'} width='100%' />
+        </LoadingContainer>
+      )}
+      {showInput && (
+        <StyledTextField
+          onChange={handleTextChange}
+          placeholder={
+            `xtremesoccer2012 joined the lobby
+             \narotheawesome joined the lobby
+             \nmineturtle20 joined the lobby
+             \nlokimonsta joined the lobby
+             \nplacerwiz joined the lobby`
+          }
+        />)
+      }
+      {isLoaded && (
         <SummonerStats
           summonerData={summonerData}
           mostCommonLanes={mostCommonLanes}
@@ -240,19 +257,34 @@ const ChampSelectPage: React.FC = () => {
 }
 export default ChampSelectPage
 
-const StyledTextField = styled(TextField)`
-  width: 600px;
-  border: 5px solid ${(props) =>
-    props.theme.inputBorder};
-  background-color: ${(props) =>
-    props.theme.inputBackground};
-`
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100vh;
   text-align: center;
 `
+
+const StyledTextField = styled.textarea`
+  position: relative;
+  top: 25%;
+  width: 600px;
+  height: 135px;
+  border: 5px solid ${(props) =>
+    props.theme.inputBorder};
+  background-color: ${(props) =>
+    props.theme.inputBackground};
+    resize: none;
+
+  ::placeholder {
+    color: #CAC4B4;
+  }
+`
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
+`
+

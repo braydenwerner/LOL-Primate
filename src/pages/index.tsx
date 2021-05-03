@@ -1,13 +1,15 @@
 import Head from 'next/head'
 import ChampSelectPage from './ChampSelectPage'
-import { ThemeToggle } from '../components/elements'
+import { Nav, ThemeToggle } from '../components/elements'
 
 const Index: React.FC = () => (
   <>
     <Head>
       <title>LOL Dodge Tool Home</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
 
+    <Nav />
     <ThemeToggle />
     <ChampSelectPage />
   </>
