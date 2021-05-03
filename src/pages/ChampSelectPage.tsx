@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BounceLoader, BarLoader, BeatLoader } from 'react-spinners'
+import { GuardSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
 
 import { SummonerStats } from '../components/modules/index'
@@ -64,7 +65,7 @@ export interface Lane {
 
 const ChampSelectPage: React.FC = () => {
   const [showInput, setShowInput] = useState<boolean>(true)
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [summonerNames, setSummonerNames] = useState<string[]>([])
   const [summonerData, setSummonerData] = useState<SummonerData>({})
@@ -229,6 +230,7 @@ const ChampSelectPage: React.FC = () => {
     <Wrapper>
       {isLoading && (
         <LoadingContainer>
+          <GuardSpinner size={100} />
           <div>Retrieving Summoner Data</div>
           <BarLoader color={'red'} width='100%' />
         </LoadingContainer>
