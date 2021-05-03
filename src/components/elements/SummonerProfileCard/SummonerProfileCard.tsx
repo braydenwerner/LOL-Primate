@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Summoner } from '../../../pages/ChampSelectPage';
 
 interface SummonerProfileCardProps {
   summoner: Summoner;
 }
 
-export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
+export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = React.memo({
   summoner,
 }) => {
   const [winrate, setWinrate] = useState<number>();

@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState } from 'react'
+import React, { useEffect, createContext, useState, useMemo } from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles, theme } from '../styles/index'
@@ -28,7 +28,7 @@ export const AppProvider: React.FC = ({ children }) => {
   }
 
   //  combine into one object for global ThemeContext state
-  const value = { themeMode, toggleTheme }
+  const value = useMemo(() => ({ themeMode, toggleTheme }), [themeMode])
   return (
     <ThemeContext.Provider value={value}>
       <ThemeProvider theme={currentTheme}>

@@ -4,6 +4,10 @@ import { ThemeToggle } from '../components/elements'
 
 const Index: React.FC = () => (
   <>
+    <Head>
+      <title>LOL Dodge Tool Home</title>
+    </Head>
+
     <ThemeToggle />
     <ChampSelectPage />
   </>

@@ -242,9 +242,10 @@ export default ChampSelectPage
 
 const StyledTextField = styled(TextField)`
   width: 600px;
+  border: 5px solid ${(props) =>
+    props.theme.inputBorder};
   background-color: ${(props) =>
-    props.theme.contrastBackground};
-  color: blue;
+    props.theme.inputBackground};
 `
 
 const Wrapper = styled.div`
