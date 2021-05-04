@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { getAPIVersion } from '../../../util/convertChampId';
-import { Image } from './RoleChampionCard.styled';
 import {
   Champion,
   Lane,
@@ -30,8 +29,6 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
   const [mostCommonChampsArr, setMostCommonChampsArr] = useState<MostCommonChampArr[]>([]);
   const [mostCommonLanesArr, setMostCommonLanesArr] = useState<MostCommonLaneArr[]>([]);
 
-  const dataDragonAPIVersion = getAPIVersion();
-
   useEffect(() => {
     const tempMostCommonChampArr: MostCommonChampArr[] = [];
     const tempMostCommonLanesArr: MostCommonLaneArr[] = [];
@@ -52,6 +49,8 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
     }
   }, [mostCommonChampions, mostCommonLanes]);
 
+  const dataDragonAPIVersion = getAPIVersion();
+
   return (
     <div>
       <div style={{ marginTop: '20px' }}>Most played:</div>
@@ -62,7 +61,9 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
               <div>
                 {champion[0]}: {champion[1]}
               </div>
-              <Image
+              <img
+                width={50}
+                height={50}
                 src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${champion[0]}.png`}
               />
             </div>

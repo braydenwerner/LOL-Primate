@@ -1,14 +1,15 @@
 import React from 'react'
+import { Grid } from '@material-ui/core'
 import {
   RoleChampionCard,
   SummonerProfileCard,
 } from '../../elements/index'
-import { Grid } from '@material-ui/core'
 import {
   SummonerData,
   MostCommonLanes,
   MostCommonChampions,
 } from '../../../pages/ChampSelectPage'
+import { StyledGridContainer } from './SummonerStats.style'
 
 interface SummonerStatsProps {
   summonerData: SummonerData
@@ -31,10 +32,9 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
       {Object.keys(summonerData).map(
         (summonerObjKey: string, i: number) => {
           return (
-            <Grid
-              className="summoner-data-container"
+            <StyledGridContainer
               item
-              xs={2}
+              xs
               key={i}
             >
               <SummonerProfileCard
@@ -43,16 +43,16 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
               <RoleChampionCard
                 mostCommonChampions={
                   mostCommonChampions[
-                    summonerData[summonerObjKey].accountId
+                  summonerData[summonerObjKey].accountId
                   ]
                 }
                 mostCommonLanes={
                   mostCommonLanes[
-                    summonerData[summonerObjKey].accountId
+                  summonerData[summonerObjKey].accountId
                   ]
                 }
               />
-            </Grid>
+            </StyledGridContainer>
           )
         },
       )}
