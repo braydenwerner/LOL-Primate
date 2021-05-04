@@ -64,7 +64,6 @@ export interface Lane {
 }
 
 const ChampSelectPage: React.FC = () => {
-  const [showInput, setShowInput] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [summonerNames, setSummonerNames] = useState<string[]>([])
@@ -175,7 +174,6 @@ const ChampSelectPage: React.FC = () => {
       setMostCommonChampions(tempMostCommonChamps)
       setIsLoading(false)
       setIsLoaded(true)
-      setShowInput(false)
     }
 
     if (Object.keys(matchOverviewData).length > 0) populateMatchData()
@@ -228,31 +226,24 @@ const ChampSelectPage: React.FC = () => {
 
   return (
     <Wrapper>
-      {isLoading && (
-        <LoadingContainer>
-          <GuardSpinner size={100} />
-          <div>Retrieving Summoner Data</div>
-          <BarLoader color={'red'} width='100%' />
-        </LoadingContainer>
-      )}
-      {showInput && (
-        <StyledTextField
-          onChange={handleTextChange}
-          placeholder={
-            `xtremesoccer2012 joined the lobby
-             \narotheawesome joined the lobby
-             \nmineturtle20 joined the lobby
-             \nlokimonsta joined the lobby
-             \nplacerwiz joined the lobby`
-          }
-        />)
-      }
+      <StyledTextField
+        onChange={handleTextChange}
+        placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
+        }
+      />
       {isLoaded && (
         <SummonerStats
           summonerData={summonerData}
           mostCommonLanes={mostCommonLanes}
           mostCommonChampions={mostCommonChampions}
         />
+      )}
+      {isLoading && (
+        <LoadingContainer>
+          <GuardSpinner size={100} />
+          <div>Retrieving Summoner Data</div>
+          <BarLoader color={'red'} width='100%' />
+        </LoadingContainer>
       )}
     </Wrapper>
   )
@@ -268,10 +259,11 @@ const Wrapper = styled.div`
 `
 
 const StyledTextField = styled.textarea`
-  position: relative;
-  top: 25%;
+  position: absolute;
+  top: 10%;
   width: 600px;
-  height: 135px;
+  height: 90px;
+  box-sizing: border-box;
   border: 5px solid ${(props) =>
     props.theme.inputBorder};
   background-color: ${(props) =>

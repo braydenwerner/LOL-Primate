@@ -28,24 +28,35 @@ export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
 
   return (
     <Styled.ProfileContainer>
-      {winrate ? (
+      {summoner.tier ? (
         <>
-          <div style={winrate > 50 ? { color: 'GREEN' } : { color: 'RED' }}>WR: {winrate}%</div>
-          <Styled.LPDiv>{summoner.leaguePoints} lp</Styled.LPDiv>
-          <Image src={`/images/${(summoner.tier)?.toLowerCase()}.png`} alt={`${summoner.tier}-icon`} width={130} height={150} />
-          <Styled.RankContainer>
-            <div>{summoner.rank}</div>
-          </Styled.RankContainer>
+          <Styled.Winrate>WR: {winrate}%</Styled.Winrate>
+          <div>{summoner.name}</div>
+          <Styled.ProfileIcon width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
+          <Styled.SummonerLevel>{summoner.summonerLevel}</Styled.SummonerLevel>
           <Styled.WinLossContainer>
             <div style={{ color: 'GREEN' }}>W: {summoner.wins}</div>
             <div style={{ color: 'RED' }}>L: {summoner.losses}</div>
           </Styled.WinLossContainer>
           <Styled.ProgressBar variant="determinate" value={winrate} />
+          <Styled.LPDivContainer>
+            <Styled.LPDiv>{summoner.leaguePoints} lp</Styled.LPDiv>
+          </Styled.LPDivContainer>
+          <Styled.SummonerTierContainer>
+            <Image src={`/images/${(summoner.tier)?.toLowerCase()}.png`} alt={`${summoner.tier}-icon`} width={130} height={150} />
+          </Styled.SummonerTierContainer>
+          <Styled.RankContainer>
+            <div>{summoner.rank}</div>
+          </Styled.RankContainer>
         </>
-      ) : (<div>No ranked data</div>)}
-      <div>{summoner.name}</div>
-      <Styled.ProfileIcon width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
-      <Styled.SummonerLevel>{summoner.summonerLevel}</Styled.SummonerLevel>
+      ) : (
+        <>
+          <div>{summoner.name}</div>
+          <Styled.ProfileIcon width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
+          <Styled.SummonerLevel>{summoner.summonerLevel}</Styled.SummonerLevel>
+          <div>No ranked data exists for this season</div>
+        </>
+      )}
     </Styled.ProfileContainer>
   );
 };

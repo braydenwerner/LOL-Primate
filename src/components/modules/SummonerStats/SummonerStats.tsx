@@ -22,12 +22,13 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
   mostCommonLanes,
   mostCommonChampions,
 }) => {
+  console.log(mostCommonChampions)
   return (
     <Grid
       container
       direction="row"
       justify="center"
-      style={{ marginTop: '20px' }}
+      style={{ marginTop: '150px' }}
     >
       {Object.keys(summonerData).map(
         (summonerObjKey: string, i: number) => {
