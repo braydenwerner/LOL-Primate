@@ -8,6 +8,7 @@ import {
   SummonerData,
   MostCommonLanes,
   MostCommonChampions,
+  SpecificMatchData,
 } from '../../../pages/ChampSelectPage'
 import { StyledGridContainer } from './SummonerStats.style'
 
@@ -15,14 +16,17 @@ interface SummonerStatsProps {
   summonerData: SummonerData
   mostCommonLanes: MostCommonLanes
   mostCommonChampions: MostCommonChampions
+  specificMatchData: SpecificMatchData
 }
 
 export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
   summonerData,
   mostCommonLanes,
   mostCommonChampions,
+  specificMatchData
 }) => {
-  console.log(mostCommonChampions)
+  //  console.log(mostCommonChampions)
+  console.log(specificMatchData)
   return (
     <Grid
       container
@@ -52,6 +56,7 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
                   summonerData[summonerObjKey].accountId
                   ]
                 }
+                specificMatchArr={specificMatchData[summonerObjKey]}
               />
             </StyledGridContainer>
           )

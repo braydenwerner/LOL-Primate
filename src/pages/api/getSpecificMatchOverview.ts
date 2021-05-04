@@ -1,0 +1,59 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import axios from 'axios'
+import { convertChampId } from '../../util/convertChampId';
+
+let count = 0;
+const getMatchOverview = async (matchId: any) => {
+    count++;
+    try {
+        const res = await axios.get(
+            encodeURI(
+                `https://na1.api.riotgames.com/lol/match/v4/matches/${matchId}?api_key=${process.env.RIOT_API_KEY}`
+            ),
+        )
+        return res.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const handleSpecificMatchOverviews = async (
+    summonerMatches: any,
+) => {
+    const specificMatchData: any = {};
+    for (const summonerId in summonerMatches) {
+        const tempMatchData = []
+
+        for (const matchId of summonerMatches[summonerId]) {
+            const specificMatch = await getMatchOverview(matchId)
+            if (!specificMatch) continue;
+
+            const participantObj = specificMatch.participantIdentities.find((p: any) => p.player.accountId === summonerId)
+            //  subtract 1, api starts counting from 1-10 players in game
+            const participantNum = participantObj.participantId - 1
+            const summonerMatchStats: any = specificMatch.participants[participantNum]
+            if (!summonerMatchStats) return;
+
+            tempMatchData.push({
+                "champion": await convertChampId(summonerMatchStats.championId),
+                "kills": summonerMatchStats.stats.kills,
+                "deaths": summonerMatchStats.stats.deaths,
+                "assists": summonerMatchStats.stats.assists,
+                "win": summonerMatchStats.stats.win
+            })
+        }
+        specificMatchData[summonerId] = tempMatchData;
+    }
+    return specificMatchData
+}
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    if (!req.body || !req.body.summonerMatches)
+        return res.status(400)
+
+    const specificMatches = await handleSpecificMatchOverviews(
+        req.body.summonerMatches,
+    )
+    console.log(count)
+    res.status(200).json(specificMatches)
+}

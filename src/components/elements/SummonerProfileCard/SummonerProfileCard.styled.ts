@@ -11,8 +11,6 @@ export const Winrate = styled.div`
     padding: 5px;
 
 `
-
-
 export const ProfileContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -35,7 +33,7 @@ export const WinLossContainer = styled.div`
 `
 
 export const ProgressBar = styled(LinearProgress)`
-    width: 55%;
+    width: 62%;
 `
 export const LPDivContainer = styled.div`
     background-color: ${commonColors.red};

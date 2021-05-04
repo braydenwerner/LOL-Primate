@@ -4,11 +4,15 @@ import { getAPIVersion } from '../../../util/convertChampId';
 import {
   Champion,
   Lane,
+  SpecificMatch,
+  SpecificMatchArr
 } from '../../../pages/ChampSelectPage';
+import * as Styled from './RoleChampionCard.styled';
 
 interface RoleChampionCardProps {
   mostCommonChampions: Champion;
   mostCommonLanes: Lane;
+  specificMatchArr: SpecificMatchArr;
 }
 
 interface MostCommonChampArr {
@@ -24,6 +28,7 @@ interface MostCommonLaneArr {
 export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
   mostCommonChampions,
   mostCommonLanes,
+  specificMatchArr,
 }) => {
   //  put dict of champ:freq into a list of champs in descending order
   const [mostCommonChampsArr, setMostCommonChampsArr] = useState<MostCommonChampArr[]>([]);
@@ -52,34 +57,32 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
   const dataDragonAPIVersion = getAPIVersion();
 
   return (
-    <div>
-      <div style={{ marginTop: '20px' }}>Most played:</div>
-      {mostCommonChampsArr &&
-        mostCommonChampsArr.splice(0, 5).map((champion: MostCommonChampArr, i: number) => {
-          return (
-            <div key={i}>
-              <div>
-                {champion[0]}: {champion[1]}
-              </div>
-              <img
-                width={50}
-                height={50}
-                src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${champion[0]}.png`}
-              />
-            </div>
-          );
+    <>
+      <Styled.RoleChampionContainer>
+        <Styled.MainChampRoleContainer>
+          {mostCommonChampions &&
+            mostCommonChampsArr[0] && (
+              <>
+                <img
+                  width={50}
+                  height={50}
+                  src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
+                />
+              </>
+            )}
+          {mostCommonLanesArr &&
+            mostCommonLanesArr[0] && (
+              <div>{mostCommonLanesArr[0][0]}</div>
+            )}
+        </Styled.MainChampRoleContainer>
+        {specificMatchArr && specificMatchArr.map((match: SpecificMatch, i: number) => {
+          <Styled.MatchStatContainer key={i}>
+            <div>{match.kills}</div>
+            <div>{match.deaths}</div>
+            <div>{match.assists}</div>
+          </Styled.MatchStatContainer>
         })}
-
-      <div style={{ marginTop: '20px' }}>Role:</div>
-      {mostCommonLanesArr &&
-        mostCommonLanesArr.map((lane: MostCommonLaneArr
-          , i: number) => {
-          return (
-            <div key={i}>
-              {lane[0]}: {lane[1]}
-            </div>
-          );
-        })}
-    </div>
-  );
+      </Styled.RoleChampionContainer>
+    </>
+  )
 };

@@ -35,8 +35,8 @@ export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
           <Styled.ProfileIcon width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
           <Styled.SummonerLevel>{summoner.summonerLevel}</Styled.SummonerLevel>
           <Styled.WinLossContainer>
-            <div style={{ color: 'GREEN' }}>W: {summoner.wins}</div>
-            <div style={{ color: 'RED' }}>L: {summoner.losses}</div>
+            <div>W: {summoner.wins}</div>
+            <div>L: {summoner.losses}</div>
           </Styled.WinLossContainer>
           <Styled.ProgressBar variant="determinate" value={winrate} />
           <Styled.LPDivContainer>

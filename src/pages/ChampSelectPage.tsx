@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { BounceLoader, BarLoader, BeatLoader } from 'react-spinners'
 import { GuardSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
 
@@ -63,6 +62,23 @@ export interface Lane {
   [lane: string]: number
 }
 
+export interface SpecificMatchData {
+  [id: string]: SpecificMatchArr
+}
+
+export interface SpecificMatchArr {
+  [id: number]: SpecificMatch[]
+}
+
+export interface SpecificMatch {
+  kills: number,
+  deaths: number,
+  assists: number,
+  championId: number,
+  champion: string,
+  win: boolean,
+}
+
 const ChampSelectPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
@@ -80,6 +96,7 @@ const ChampSelectPage: React.FC = () => {
     mostCommonLanes,
     setMostCommonLanes,
   ] = useState<MostCommonLanes>({})
+  const [specificMatchData, setSpecificMatchData] = useState<SpecificMatchData>({})
 
   useEffect(() => {
     getAPIVersion()
@@ -133,15 +150,44 @@ const ChampSelectPage: React.FC = () => {
   //  most common roles,
   //  ex: mostCommonChampions[id] = {2: 9, 5: 4} -> champion of id 2, played 9 times
   useEffect(() => {
+    const querySpecificMatchData = async (summonerMatches: any) => {
+      const res = await fetch(`${URL}/getSpecificMatchOverview`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ summonerMatches }),
+      })
+
+      //  parse the data to find the current player in the match
+      //  then extract the data that is necessary
+      const tempSpecificMatchData = await res.json();
+      console.log(tempSpecificMatchData)
+      setSpecificMatchData({ ...tempSpecificMatchData })
+    }
+
     const populateMatchData = async () => {
       console.log(matchOverviewData)
       const tempMostCommonLanes: MostCommonLanes = {}
       const tempMostCommonChamps: MostCommonChampions = {}
 
+      //  playerId: ids[]
+      const summonerMatches: any = {}
+
       for (const id in matchOverviewData) {
         const laneFreq: Lane = {}
         const champFreq: Champion = {}
+
+        //  accumulate 6 game ids per player
+        let count = 0;
         for (const matchObj in matchOverviewData[id]) {
+          if (count < 6) {
+            if (!(id in summonerMatches)) summonerMatches[id] = []
+            summonerMatches[id].push(matchOverviewData[id][matchObj].gameId)
+            count++
+          }
+
           const lane = matchOverviewData[id][matchObj].lane
           const role = matchOverviewData[id][matchObj].role
           const champion: string = await convertChampId(
@@ -169,6 +215,11 @@ const ChampSelectPage: React.FC = () => {
         tempMostCommonLanes[id] = { ...laneFreq }
         tempMostCommonChamps[id] = { ...champFreq }
       }
+
+      //  get stats for 6 most recent matches for each player ex. k/d/a
+      console.log('starting query')
+      console.log(summonerMatches)
+      querySpecificMatchData(summonerMatches)
 
       setMostCommonLanes(tempMostCommonLanes)
       setMostCommonChampions(tempMostCommonChamps)
@@ -236,13 +287,13 @@ const ChampSelectPage: React.FC = () => {
           summonerData={summonerData}
           mostCommonLanes={mostCommonLanes}
           mostCommonChampions={mostCommonChampions}
+          specificMatchData={specificMatchData}
         />
       )}
       {isLoading && (
         <LoadingContainer>
           <GuardSpinner size={100} />
           <div>Retrieving Summoner Data</div>
-          <BarLoader color={'red'} width='100%' />
         </LoadingContainer>
       )}
     </Wrapper>
