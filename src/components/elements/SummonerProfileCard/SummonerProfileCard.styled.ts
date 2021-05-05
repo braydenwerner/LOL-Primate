@@ -21,6 +21,7 @@ export const ProfileContainer = styled.div`
     justify-content: center;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
+    min-height: 415px;
 `
 
 export const WinLossContainer = styled.div`

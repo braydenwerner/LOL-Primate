@@ -111,7 +111,7 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
           })}
         </Grid>
         <Styled.TrimContainer>
-          <Image src={`/images/platinumtrim.png`} alt={`${mostCommonLanesArr[0][0]}-icon`} width={'100%'} height={'100%'} />
+          <Image src={`/images/platinumtrim.png`} alt={`${mostCommonLanesArr[0][0]}-icon`} width={'270px'} height={'100%'} />
         </Styled.TrimContainer>
       </Styled.RoleChampionWrapper>
     )

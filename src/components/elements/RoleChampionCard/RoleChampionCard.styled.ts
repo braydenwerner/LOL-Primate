@@ -7,8 +7,8 @@ export const RoleChampionWrapper = styled.div`
     width: 270px;
     align-items: center;
     justify-content: center;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 116px;
+    border-bottom-right-radius: 116px;
     margin: 0px 10px 35px 10px;
     min-height: 200px;
 `
@@ -46,5 +46,4 @@ export const LoadingContainer = styled.div`
 `
 
 export const TrimContainer = styled.div`
-    
 `
