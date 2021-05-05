@@ -10,7 +10,7 @@ import {
   MostCommonChampions,
   SpecificMatchData,
 } from '../../../pages/ChampSelectPage'
-import { StyledGridContainer } from './SummonerStats.style'
+import { StyledGridContainer } from '../../../styles/constantStyles'
 
 interface SummonerStatsProps {
   summonerData: SummonerData
@@ -36,6 +36,8 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
     >
       {Object.keys(summonerData).map(
         (summonerObjKey: string, i: number) => {
+          // console.log(summonerObjKey)
+          // console.log(specificMatchData[summonerData[summonerObjKey].accountId])
           return (
             <StyledGridContainer
               item
@@ -56,7 +58,7 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
                   summonerData[summonerObjKey].accountId
                   ]
                 }
-                specificMatchArr={specificMatchData[summonerObjKey]}
+                specificMatchArr={specificMatchData[summonerData[summonerObjKey].accountId]}
               />
             </StyledGridContainer>
           )

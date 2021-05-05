@@ -3,7 +3,7 @@ import axios from 'axios'
 import { convertChampId } from '../../util/convertChampId';
 
 let count = 0;
-const getMatchOverview = async (matchId: any) => {
+const getMatchOverview = async (matchId: string) => {
     count++;
     try {
         const res = await axios.get(
@@ -31,7 +31,7 @@ export const handleSpecificMatchOverviews = async (
             const participantObj = specificMatch.participantIdentities.find((p: any) => p.player.accountId === summonerId)
             //  subtract 1, api starts counting from 1-10 players in game
             const participantNum = participantObj.participantId - 1
-            const summonerMatchStats: any = specificMatch.participants[participantNum]
+            const summonerMatchStats = specificMatch.participants[participantNum]
             if (!summonerMatchStats) return;
 
             tempMatchData.push({

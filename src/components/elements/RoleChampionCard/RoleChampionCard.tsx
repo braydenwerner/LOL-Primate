@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
+import { RotateSpinner } from 'react-spinners-kit'
+import { Grid } from '@material-ui/core'
+import Image from 'next/image'
 
+import { StyledGridContainer } from '../../../styles/constantStyles'
 import { getAPIVersion } from '../../../util/convertChampId';
 import {
   Champion,
   Lane,
   SpecificMatch,
-  SpecificMatchArr
+  SpecificMatchArr,
 } from '../../../pages/ChampSelectPage';
 import * as Styled from './RoleChampionCard.styled';
 
@@ -33,6 +37,7 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
   //  put dict of champ:freq into a list of champs in descending order
   const [mostCommonChampsArr, setMostCommonChampsArr] = useState<MostCommonChampArr[]>([]);
   const [mostCommonLanesArr, setMostCommonLanesArr] = useState<MostCommonLaneArr[]>([]);
+  const [loadingMatchData, setLoadingMatchData] = useState<boolean>(true)
 
   useEffect(() => {
     const tempMostCommonChampArr: MostCommonChampArr[] = [];
@@ -54,35 +59,69 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
     }
   }, [mostCommonChampions, mostCommonLanes]);
 
+  useEffect(() => {
+    specificMatchArr instanceof Array ? setLoadingMatchData(false) : setLoadingMatchData(true)
+  }, [specificMatchArr])
+
   const dataDragonAPIVersion = getAPIVersion();
 
-  return (
-    <>
-      <Styled.RoleChampionContainer>
+  if (!loadingMatchData) {
+    return (
+      <Styled.RoleChampionWrapper>
         <Styled.MainChampRoleContainer>
           {mostCommonChampions &&
             mostCommonChampsArr[0] && (
               <>
                 <img
-                  width={50}
-                  height={50}
+                  width={40}
+                  height={40}
                   src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
                 />
               </>
             )}
           {mostCommonLanesArr &&
             mostCommonLanesArr[0] && (
-              <div>{mostCommonLanesArr[0][0]}</div>
+              <Image src={`/images/${mostCommonLanesArr[0][0]}.png`} alt={`${mostCommonLanesArr[0][0]}-icon`} width={40} height={40} />
             )}
         </Styled.MainChampRoleContainer>
-        {specificMatchArr && specificMatchArr.map((match: SpecificMatch, i: number) => {
-          <Styled.MatchStatContainer key={i}>
-            <div>{match.kills}</div>
-            <div>{match.deaths}</div>
-            <div>{match.assists}</div>
-          </Styled.MatchStatContainer>
-        })}
-      </Styled.RoleChampionContainer>
-    </>
-  )
+        <Grid
+          container
+          direction="row"
+          justify="center"
+        >
+          {specificMatchArr instanceof Array && specificMatchArr.map((match: SpecificMatch, i: number) => {
+            return (
+              <StyledGridContainer
+                item
+                xs
+                key={i}
+              >
+                <Styled.MatchStatContainer key={i} >
+                  <img
+                    width={25}
+                    height={25}
+                    src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${match.champion}.png`}
+                  />
+                  <Styled.KDAContainer color={match.win ? '#4766E5' : '#E25151'}>
+                    <div>{match.kills}/{match.deaths}/{match.assists}</div>
+                  </Styled.KDAContainer>
+                </Styled.MatchStatContainer>
+              </StyledGridContainer>
+            )
+          })}
+        </Grid>
+        <Styled.TrimContainer>
+          <Image src={`/images/platinumtrim.png`} alt={`${mostCommonLanesArr[0][0]}-icon`} width={'100%'} height={'100%'} />
+        </Styled.TrimContainer>
+      </Styled.RoleChampionWrapper>
+    )
+  } else {
+    return (
+      <Styled.MainChampRoleContainer>
+        <Styled.LoadingContainer>
+          <RotateSpinner size={100} />
+        </Styled.LoadingContainer>
+      </Styled.MainChampRoleContainer>
+    )
+  }
 };

@@ -16,8 +16,7 @@ export const ProfileContainer = styled.div`
     flex-direction: column;
     background-color: #333341;
     width: 90%;
-    max-width: 300px;
-    min-width: 200px;
+    width: 270px;
     align-items: center;
     justify-content: center;
     border-top-left-radius: 16px;

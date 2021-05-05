@@ -63,11 +63,11 @@ export interface Lane {
 }
 
 export interface SpecificMatchData {
-  [id: string]: SpecificMatchArr
+  [id: string]: SpecificMatch[]
 }
 
 export interface SpecificMatchArr {
-  [id: number]: SpecificMatch[]
+  [index: number]: SpecificMatch
 }
 
 export interface SpecificMatch {
@@ -150,7 +150,7 @@ const ChampSelectPage: React.FC = () => {
   //  most common roles,
   //  ex: mostCommonChampions[id] = {2: 9, 5: 4} -> champion of id 2, played 9 times
   useEffect(() => {
-    const querySpecificMatchData = async (summonerMatches: any) => {
+    const querySpecificMatchData = async (summonerMatches: { [id: string]: Array<number> }) => {
       const res = await fetch(`${URL}/getSpecificMatchOverview`, {
         method: 'POST',
         headers: {
@@ -173,7 +173,7 @@ const ChampSelectPage: React.FC = () => {
       const tempMostCommonChamps: MostCommonChampions = {}
 
       //  playerId: ids[]
-      const summonerMatches: any = {}
+      const summonerMatches: { [id: string]: Array<number> } = {}
 
       for (const id in matchOverviewData) {
         const laneFreq: Lane = {}
