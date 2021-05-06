@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSpring, animated } from 'react-spring'
 import { Grid } from '@material-ui/core'
 import {
   RoleChampionCard,
@@ -27,7 +28,18 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
   specificMatchData
 }) => {
   //  console.log(mostCommonChampions)
-  console.log(specificMatchData)
+  // console.log(specificMatchData)
+  const [flip, set] = useState(false)
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    reset: true,
+    reverse: flip,
+    delay: 200,
+    config: config.molasses,
+    onRest: () => set(!flip),
+  })
+
   return (
     <Grid
       container
@@ -43,6 +55,9 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
               xs
               key={i}
             >
+              <animated.div style={props}>
+                <div>Test</div>
+              </animated.div>
               <Styled.SummonerStatsContainer image={`/images/banner.png`}>
                 <SummonerProfileCard
                   summoner={summonerData[summonerObjKey]}

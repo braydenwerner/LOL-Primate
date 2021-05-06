@@ -4,7 +4,7 @@ import { Nav, ThemeToggle } from '../components/elements'
 const Index: React.FC = () => (
   <>
     <Nav />
-    <ThemeToggle />
+    {/* <ThemeToggle /> */}
     <ChampSelectPage />
   </>
 )
