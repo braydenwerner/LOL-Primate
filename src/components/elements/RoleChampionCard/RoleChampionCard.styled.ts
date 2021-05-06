@@ -27,9 +27,12 @@ interface KDAContainerProps {
 export const KDAContainer = styled.div<KDAContainerProps>`
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100px;
     background-color: ${props => props.color};
-    margin: 3px 0px 3px 0px
+    margin: 3px 0px 3px 0px;
+    font-family: Varela;
+    font-weight: 500;
 `
 
 export const LoadingContainer = styled.div`

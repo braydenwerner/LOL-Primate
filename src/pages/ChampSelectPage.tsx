@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { GuardSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
 
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { SummonerStats } from '../components/modules/index'
 import { convertChampId, getAPIVersion } from '../util/convertChampId'
 import { URL } from '../config/config'
@@ -101,6 +102,8 @@ const ChampSelectPage: React.FC = () => {
   useEffect(() => {
     getAPIVersion()
   }, [])
+
+
 
   useEffect(() => {
     const querySummonerData = async (summonerNames: string[]) => {
@@ -217,7 +220,6 @@ const ChampSelectPage: React.FC = () => {
       }
 
       //  get stats for 6 most recent matches for each player ex. k/d/a
-      console.log('starting query')
       console.log(summonerMatches)
       querySpecificMatchData(summonerMatches)
 
@@ -275,10 +277,13 @@ const ChampSelectPage: React.FC = () => {
     }
   }
 
+  const largeScreen = useMediaQuery('(min-width: 800px)')
+
   return (
     <Wrapper>
       <StyledTextField
         onChange={handleTextChange}
+        largeScreen={largeScreen}
         placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
         }
       />
@@ -305,15 +310,23 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   height: 100vh;
   text-align: center;
+  background-image: url('/images/lobbybackground.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 `
 
-const StyledTextField = styled.textarea`
+interface StyledTextFieldProps {
+  largeScreen: boolean;
+}
+
+const StyledTextField = styled.textarea<StyledTextFieldProps>`
   position: absolute;
-  top: 10%;
-  width: 600px;
-  height: 90px;
+  top: 5%;
+  width: ${props => props.largeScreen ? '800px' : '100%'};
+  height: 85px;
   box-sizing: border-box;
   border: 2px solid ${(props) =>
     props.theme.inputBorder};

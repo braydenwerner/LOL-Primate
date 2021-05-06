@@ -11,6 +11,7 @@ ${({ theme }) => css`
       margin: 0;
       background: ${theme.background};
       color: ${theme.primaryText};
+      font-family: Newsreader;
     }
   }
 `}

@@ -31,7 +31,7 @@ export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
       {summoner.tier ? (
         <>
           <Styled.Winrate>WR: {winrate}%</Styled.Winrate>
-          <div>{summoner.name}</div>
+          <div style={{ fontSize: '20px' }}>{summoner.name}</div>
           <Styled.ProfileIcon width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
           <Styled.SummonerLevel>{summoner.summonerLevel}</Styled.SummonerLevel>
           <Styled.WinLossContainer>
@@ -51,10 +51,13 @@ export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
         </>
       ) : (
         <>
-          <div>{summoner.name}</div>
-          <Styled.ProfileIcon width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
+          <div style={{ fontSize: '20px', position: 'relative', top: '15px', marginTop: '170px' }}>{summoner.name}</div>
+          <Styled.ProfileIcon style={{ marginTop: '40px' }} width={90} height={90} src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/profileicon/${summoner.profileIconId}.png`} />
           <Styled.SummonerLevel>{summoner.summonerLevel}</Styled.SummonerLevel>
-          <div>No ranked data exists for this season</div>
+          <Styled.noDataText>No ranked data exists for this season</Styled.noDataText>
+          <Styled.SummonerTierContainer style={{ position: 'relative', top: '15px', marginBottom: '95px' }}>
+            <Image src={`/images/unranked.png`} alt='unranked-icon' width={'100%'} height={'100%'} />
+          </Styled.SummonerTierContainer>
         </>
       )}
     </Styled.ProfileContainer>

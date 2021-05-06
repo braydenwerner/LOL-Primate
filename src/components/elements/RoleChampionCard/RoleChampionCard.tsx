@@ -71,13 +71,11 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
         <Styled.MainChampRoleContainer>
           {mostCommonChampions &&
             mostCommonChampsArr[0] && (
-              <>
-                <img
-                  width={40}
-                  height={40}
-                  src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
-                />
-              </>
+              <img
+                width={40}
+                height={40}
+                src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
+              />
             )}
           {mostCommonLanesArr &&
             mostCommonLanesArr[0] && (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSpring, animated } from 'react-spring'
+import { config, useSpring, animated } from 'react-spring'
 import { Grid } from '@material-ui/core'
 import {
   RoleChampionCard,
@@ -29,15 +29,11 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
 }) => {
   //  console.log(mostCommonChampions)
   // console.log(specificMatchData)
-  const [flip, set] = useState(false)
   const props = useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
-    reset: true,
-    reverse: flip,
-    delay: 200,
+    delay: 100,
     config: config.molasses,
-    onRest: () => set(!flip),
   })
 
   return (
@@ -56,26 +52,25 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
               key={i}
             >
               <animated.div style={props}>
-                <div>Test</div>
+                <Styled.SummonerStatsContainer image={`/images/banner.png`}>
+                  <SummonerProfileCard
+                    summoner={summonerData[summonerObjKey]}
+                  />
+                  <RoleChampionCard
+                    mostCommonChampions={
+                      mostCommonChampions[
+                      summonerData[summonerObjKey].accountId
+                      ]
+                    }
+                    mostCommonLanes={
+                      mostCommonLanes[
+                      summonerData[summonerObjKey].accountId
+                      ]
+                    }
+                    specificMatchArr={specificMatchData[summonerData[summonerObjKey].accountId]}
+                  />
+                </Styled.SummonerStatsContainer>
               </animated.div>
-              <Styled.SummonerStatsContainer image={`/images/banner.png`}>
-                <SummonerProfileCard
-                  summoner={summonerData[summonerObjKey]}
-                />
-                <RoleChampionCard
-                  mostCommonChampions={
-                    mostCommonChampions[
-                    summonerData[summonerObjKey].accountId
-                    ]
-                  }
-                  mostCommonLanes={
-                    mostCommonLanes[
-                    summonerData[summonerObjKey].accountId
-                    ]
-                  }
-                  specificMatchArr={specificMatchData[summonerData[summonerObjKey].accountId]}
-                />
-              </Styled.SummonerStatsContainer>
             </StyledGridContainer>
           )
         },

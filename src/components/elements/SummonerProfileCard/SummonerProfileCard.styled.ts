@@ -9,7 +9,7 @@ export const Winrate = styled.div`
     border-radius: 15px;
     font-size: 20px;
     padding: 5px;
-    margin-top: 90px;
+    margin-top: 100px;
 `
 export const ProfileContainer = styled.div`
     display: flex;
@@ -46,6 +46,7 @@ export const LPDiv = styled.div`
 
 export const SummonerTierContainer = styled.div`
     background-color: ${(props) => props.theme.secondary};
+    border: 2px solid ${(props) => props.theme.inputBorder};
     border-radius: 105px;
 `
 
@@ -73,4 +74,9 @@ export const SummonerLevel = styled.div`
     font-size: 12px;
     border-radius: 10px;
     padding: 2px;
+`
+
+export const noDataText = styled.div`
+    font-size: 20px;
+    padding: 10px;
 `
