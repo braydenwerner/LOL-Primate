@@ -10,6 +10,7 @@ import {
   MostCommonChampions,
   SpecificMatchData,
 } from '../../../pages/ChampSelectPage'
+import * as Styled from './SummonerStats.style'
 import { StyledGridContainer } from '../../../styles/constantStyles'
 
 interface SummonerStatsProps {
@@ -36,30 +37,30 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
     >
       {Object.keys(summonerData).map(
         (summonerObjKey: string, i: number) => {
-          // console.log(summonerObjKey)
-          // console.log(specificMatchData[summonerData[summonerObjKey].accountId])
           return (
             <StyledGridContainer
               item
               xs
               key={i}
             >
-              <SummonerProfileCard
-                summoner={summonerData[summonerObjKey]}
-              />
-              <RoleChampionCard
-                mostCommonChampions={
-                  mostCommonChampions[
-                  summonerData[summonerObjKey].accountId
-                  ]
-                }
-                mostCommonLanes={
-                  mostCommonLanes[
-                  summonerData[summonerObjKey].accountId
-                  ]
-                }
-                specificMatchArr={specificMatchData[summonerData[summonerObjKey].accountId]}
-              />
+              <Styled.SummonerStatsContainer image={`/images/banner.png`}>
+                <SummonerProfileCard
+                  summoner={summonerData[summonerObjKey]}
+                />
+                <RoleChampionCard
+                  mostCommonChampions={
+                    mostCommonChampions[
+                    summonerData[summonerObjKey].accountId
+                    ]
+                  }
+                  mostCommonLanes={
+                    mostCommonLanes[
+                    summonerData[summonerObjKey].accountId
+                    ]
+                  }
+                  specificMatchArr={specificMatchData[summonerData[summonerObjKey].accountId]}
+                />
+              </Styled.SummonerStatsContainer>
             </StyledGridContainer>
           )
         },

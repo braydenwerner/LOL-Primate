@@ -9,12 +9,11 @@ export const Winrate = styled.div`
     border-radius: 15px;
     font-size: 20px;
     padding: 5px;
-
+    margin-top: 90px;
 `
 export const ProfileContainer = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: #333341;
     width: 90%;
     width: 270px;
     align-items: center;
@@ -62,8 +61,7 @@ export const RankContainer = styled.div`
 `
 
 export const ProfileIcon = styled.img`
-position: relative;
-
+    position: relative;
     margin-top: 20px;
     border-radius: 20px;
 `

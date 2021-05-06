@@ -38,7 +38,7 @@ export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
             <div>W: {summoner.wins}</div>
             <div>L: {summoner.losses}</div>
           </Styled.WinLossContainer>
-          <Styled.ProgressBar variant="determinate" value={winrate} />
+          <Styled.ProgressBar variant="determinate" value={winrate ? winrate : 50} />
           <Styled.LPDivContainer>
             <Styled.LPDiv>{summoner.leaguePoints} lp</Styled.LPDiv>
           </Styled.LPDivContainer>

@@ -29,10 +29,12 @@ export const handleSpecificMatchOverviews = async (
             if (!specificMatch) continue;
 
             const participantObj = specificMatch.participantIdentities.find((p: any) => p.player.accountId === summonerId)
+            if (!participantObj) continue;
+
             //  subtract 1, api starts counting from 1-10 players in game
             const participantNum = participantObj.participantId - 1
             const summonerMatchStats = specificMatch.participants[participantNum]
-            if (!summonerMatchStats) return;
+            if (!summonerMatchStats) continue;
 
             tempMatchData.push({
                 "champion": await convertChampId(summonerMatchStats.championId),

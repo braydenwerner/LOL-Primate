@@ -315,7 +315,7 @@ const StyledTextField = styled.textarea`
   width: 600px;
   height: 90px;
   box-sizing: border-box;
-  border: 5px solid ${(props) =>
+  border: 2px solid ${(props) =>
     props.theme.inputBorder};
   background-color: ${(props) =>
     props.theme.inputBackground};
