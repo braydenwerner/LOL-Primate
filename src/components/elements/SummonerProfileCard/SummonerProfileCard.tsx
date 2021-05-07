@@ -46,7 +46,7 @@ export const SummonerProfileCard: React.FC<SummonerProfileCardProps> = ({
             <Image src={`/images/${(summoner.tier)?.toLowerCase()}.png`} alt={`${summoner.tier}-icon`} width={130} height={150} />
           </Styled.SummonerTierContainer>
           <Styled.RankContainer>
-            <div>{summoner.rank}</div>
+            <div style={{ marginTop: '1px' }}>{summoner.rank}</div>
           </Styled.RankContainer>
         </>
       ) : (

@@ -71,15 +71,20 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
         <Styled.MainChampRoleContainer>
           {mostCommonChampions &&
             mostCommonChampsArr[0] && (
-              <img
-                width={40}
-                height={40}
-                src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
-              />
+              <Styled.ChampRoleImageContainer>
+                <Styled.MostCommonChampIcon
+                  width={42}
+                  height={42}
+                  style={{ borderRadius: '50px;' }}
+                  src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
+                />
+              </Styled.ChampRoleImageContainer>
             )}
           {mostCommonLanesArr &&
             mostCommonLanesArr[0] && (
-              <Image src={`/images/${mostCommonLanesArr[0][0]}.png`} alt={`${mostCommonLanesArr[0][0]}-icon`} width={40} height={40} />
+              <Styled.ChampRoleImageContainer>
+                <Image src={`/images/${mostCommonLanesArr[0][0]}.png`} alt={`${mostCommonLanesArr[0][0]}-icon`} width={40} height={40} />
+              </Styled.ChampRoleImageContainer>
             )}
         </Styled.MainChampRoleContainer>
         <Grid
@@ -108,7 +113,7 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
             )
           })}
         </Grid>
-      </Styled.RoleChampionWrapper>
+      </Styled.RoleChampionWrapper >
     )
   } else {
     return (

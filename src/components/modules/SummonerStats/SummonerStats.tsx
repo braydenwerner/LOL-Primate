@@ -41,7 +41,7 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
       container
       direction="row"
       justify="center"
-      style={{ marginTop: '150px' }}
+      style={{ marginTop: '200px', marginBottom: '200px' }}
     >
       {Object.keys(summonerData).map(
         (summonerObjKey: string, i: number) => {

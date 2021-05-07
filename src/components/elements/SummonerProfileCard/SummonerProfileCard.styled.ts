@@ -54,7 +54,7 @@ export const RankContainer = styled.div`
     display: flex;
     justify-content: center;
     position: relative;
-    bottom: 15px;
+    bottom: 10px;
     background-color: ${commonColors.red};
     text-align: center;
     border-radius: 6px;

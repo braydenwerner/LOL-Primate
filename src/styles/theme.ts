@@ -2,7 +2,7 @@ export type ThemeType = typeof theme['light'];
 
 const theme = {
   light: {
-    background: '#EAEAEA',
+    background: '#0A162B',
     secondary: '#1E2328',
     primaryText: 'black',
     contrastBackground: '#cc3399',
@@ -11,7 +11,7 @@ const theme = {
     inputBorder: '#3E3501'
   },
   dark: {
-    background: '#181A1B',
+    background: '#0A162B',
     secondary: '#1E2328',
     primaryText: 'white',
     contrastBackground: '#EAEAEA',

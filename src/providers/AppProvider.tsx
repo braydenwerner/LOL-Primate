@@ -4,16 +4,16 @@ import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '../styles/index'
 
 export const ThemeContext = createContext({
-  themeMode: 'light',
-  toggleTheme: () => { return }  
+  themeMode: 'dark',
+  toggleTheme: () => { return }
 })
 
 export const AppProvider: React.FC = ({ children }) => {
-  const [themeMode, setThemeMode] = useState<string>('light')
+  const [themeMode, setThemeMode] = useState<string>('dark')
   const currentTheme = (theme as any)[themeMode]
 
   useEffect(() => {
-    setThemeMode(localStorage.getItem('theme') || 'light')
+    setThemeMode(localStorage.getItem('theme') || 'dark')
   }, [])
 
   useEffect(() => {

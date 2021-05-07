@@ -16,6 +16,22 @@ export const MainChampRoleContainer = styled.div`
     margin-bottom: 10px;
 `
 
+export const ChampRoleImageContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: ${props => props.theme.secondary}
+`
+
+export const MostCommonChampIcon = styled.img`
+    background-color: ${props => props.theme.secondary}
+    position: relative;
+    border-radius: 20px;
+`
+
 export const MatchStatContainer = styled.div`
     display: flex;
 `
@@ -38,8 +54,8 @@ export const KDAContainer = styled.div<KDAContainerProps>`
 export const LoadingContainer = styled.div`
     display: flex;
     position: relative;
-    top: 25px;
+    top: 30px;
     justify-content: center;
     width: 270px;
-    height: 200px;
+    height: 240px;
 `

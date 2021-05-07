@@ -1,5 +1,5 @@
 import ChampSelectPage from './ChampSelectPage'
-import { Nav, ThemeToggle } from '../components/elements'
+//  import { Nav, ThemeToggle } from '../components/elements'
 
 const Index: React.FC = () => (
   <>

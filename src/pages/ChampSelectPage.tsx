@@ -310,12 +310,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  height: 100vh;
+  height: 120vh;
   text-align: center;
-  background-image: url('/images/lobbybackground.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
 `
 
 interface StyledTextFieldProps {
@@ -325,7 +321,7 @@ interface StyledTextFieldProps {
 const StyledTextField = styled.textarea<StyledTextFieldProps>`
   position: absolute;
   top: 5%;
-  width: ${props => props.largeScreen ? '800px' : '100%'};
+  width: ${props => props.largeScreen ? '800px' : '97%'};
   height: 85px;
   box-sizing: border-box;
   border: 2px solid ${(props) =>
