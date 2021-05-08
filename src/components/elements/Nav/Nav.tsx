@@ -8,11 +8,8 @@ export const Nav: React.FC = () => {
         <AppBar position="static">
             <Toolbar>
                 <NavIcon edge="start" color="inherit" aria-label="menu" >
-                    <Image src='/images/logo.png' alt='LOL-Dodge-Logo' width={50} height={50} />
+                    <Image src='/images/lolgorillanav.png' width={219.375} height={40.75} />
                 </NavIcon>
-                <Typography variant="h6" >
-                    LOL Dodge
-                </Typography>
             </Toolbar>
         </AppBar>
     );

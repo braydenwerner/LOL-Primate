@@ -7,7 +7,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta name="description" content="Win more games!" />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <link href="https://fonts.googleapis.com/css2?family=Newsreader&display=swap" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />

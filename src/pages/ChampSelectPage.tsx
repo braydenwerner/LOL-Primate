@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { GuardSpinner } from 'react-spinners-kit'
+import Head from 'next/head'
+import Image from 'next/image'
+import { CombSpinner, GuardSpinner, ImpulseSpinner, WaveSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
 
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -102,8 +104,6 @@ const ChampSelectPage: React.FC = () => {
   useEffect(() => {
     getAPIVersion()
   }, [])
-
-
 
   useEffect(() => {
     const querySummonerData = async (summonerNames: string[]) => {
@@ -280,28 +280,34 @@ const ChampSelectPage: React.FC = () => {
   const largeScreen = useMediaQuery('(min-width: 800px)')
 
   return (
-    <Wrapper>
-      <StyledTextField
-        onChange={handleTextChange}
-        largeScreen={largeScreen}
-        placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
-        }
-      />
-      {isLoaded && (
-        <SummonerStats
-          summonerData={summonerData}
-          mostCommonLanes={mostCommonLanes}
-          mostCommonChampions={mostCommonChampions}
-          specificMatchData={specificMatchData}
-        />
-      )}
+    <>
+      <Head>
+        <title>LOL Gorilla</title>
+        <meta property="og:title" content="LOL Gorilla Home" key="title" />
+        <meta name="description" content="Win more games!" />
+      </Head>
       {isLoading && (
         <LoadingContainer>
-          <GuardSpinner size={100} />
-          <div>Retrieving Summoner Data</div>
+          <ImpulseSpinner size={150} />
         </LoadingContainer>
       )}
-    </Wrapper>
+      <Wrapper>
+        <StyledTextField
+          onChange={handleTextChange}
+          largeScreen={largeScreen}
+          placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
+          }
+        />
+        {isLoaded && (
+          <SummonerStats
+            summonerData={summonerData}
+            mostCommonLanes={mostCommonLanes}
+            mostCommonChampions={mostCommonChampions}
+            specificMatchData={specificMatchData}
+          />
+        )}
+      </Wrapper>
+    </>
   )
 }
 export default ChampSelectPage
@@ -320,15 +326,20 @@ interface StyledTextFieldProps {
 
 const StyledTextField = styled.textarea<StyledTextFieldProps>`
   position: absolute;
-  top: 5%;
+  top: 10%;
   width: ${props => props.largeScreen ? '800px' : '97%'};
-  height: 85px;
+  height: 115px;
   box-sizing: border-box;
   border: 2px solid ${(props) =>
     props.theme.inputBorder};
   background-color: ${(props) =>
     props.theme.inputBackground};
     resize: none;
+  color: white;
+  outline: none;
+  font-family: Newsreader;
+  font-size: 21px;
+  font-style: italic;
 
   ::placeholder {
     color: #CAC4B4;
@@ -338,7 +349,9 @@ const StyledTextField = styled.textarea<StyledTextFieldProps>`
 const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 500px;
+  justify-content: center;
   align-items: center;
+  position: relative;
+  top: 175px;
 `
 

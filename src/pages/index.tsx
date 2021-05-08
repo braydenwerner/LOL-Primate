@@ -1,11 +1,13 @@
 import ChampSelectPage from './ChampSelectPage'
-//  import { Nav, ThemeToggle } from '../components/elements'
+import { Nav, LolGorillaBackground, ThemeToggle, CopyrightContainer } from '../components/elements'
 
 const Index: React.FC = () => (
   <>
-    {/* <Nav /> */}
+    <Nav />
+    <LolGorillaBackground />
     {/* <ThemeToggle /> */}
     <ChampSelectPage />
+    {/* <CopyrightContainer /> */}
   </>
 )
 export default Index
