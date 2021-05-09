@@ -8,6 +8,7 @@ import { SummonerStats } from '../components/modules/index'
 import { convertChampId, getAPIVersion } from '../util/convertChampId'
 import { URL } from '../config/config'
 import { PreviewSummary } from '../components/elements/index'
+import { commonColors } from '../styles/theme'
 
 export interface SummonerData {
   [id: string]: Summoner
@@ -278,6 +279,10 @@ const ChampSelectPage: React.FC = () => {
     }
   }
 
+  const handleRandomSummonersClick = () => {
+    setSummonerNames(['adoldet', 'crimsonteal', 'Andemuet', 'lokimonsta', 'Uiharu'])
+  }
+
   const largeScreen = useMediaQuery('(min-width: 800px)')
 
   return (
@@ -293,12 +298,16 @@ const ChampSelectPage: React.FC = () => {
         </LoadingContainer>
       )}
       <Wrapper>
-        <StyledTextField
-          onChange={handleTextChange}
-          largeScreen={largeScreen}
-          placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
-          }
-        />
+        <InputContainer largeScreen={largeScreen}>
+          <InputContainerTitle>Copy and paste below or try with
+            <InputContainerLink onClick={handleRandomSummonersClick}>random summoner names</InputContainerLink>
+          </InputContainerTitle>
+          <StyledTextField
+            onChange={handleTextChange}
+            placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
+            }
+          />
+        </InputContainer>
         {isLoaded ? (
           <SummonerStats
             summonerData={summonerData}
@@ -323,17 +332,40 @@ const Wrapper = styled.div`
   text-align: center;
 `
 
-interface StyledTextFieldProps {
+interface InputContainerProps {
   largeScreen: boolean;
 }
 
-const StyledTextField = styled.textarea<StyledTextFieldProps>`
-  position: absolute;
-  top: 10%;
+const InputContainer = styled.div<InputContainerProps>`
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
   width: ${props => props.largeScreen ? '800px' : '97%'};
+  background-color: ${props => props.theme.inputBackground};
+  border: 2px solid ${props => props.theme.inputBorder};
+`
+
+const InputContainerTitle = styled.div`
+  font-size: 22px;
+  margin-top: 7px;
+  margin-bottom: 2px;
+`
+
+const InputContainerLink = styled.span`
+  color: ${commonColors.red};
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: underline;
+  font-style: underline;
+`
+
+const StyledTextField = styled.textarea`
+  width: 100%;
   height: 115px;
+  margin-top: 5px;
+  padding-top: 5px;
   box-sizing: border-box;
-  border: 2px solid ${(props) =>
+  border: 1px solid ${(props) =>
     props.theme.inputBorder};
   background-color: ${(props) =>
     props.theme.inputBackground};

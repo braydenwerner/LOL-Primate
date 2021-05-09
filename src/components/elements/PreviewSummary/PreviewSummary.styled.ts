@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 
-interface PreviewWrapper {
+interface PreviewWrapperProps {
     notSmallScreen: boolean;
     gridAdjust: boolean;
 }
 
-export const PreviewWrapper = styled.div<PreviewWrapper>`
+export const PreviewWrapper = styled.div<PreviewWrapperProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,10 +33,10 @@ export const PreviewTitle = styled.div`
     padding: 10px;
 `
 
-interface PreviewImage {
+interface PreviewImageProps {
     layout: string;
 }
 
-export const PreviewImage = styled(Image) <PreviewImage>`
+export const PreviewImage = styled(Image) <PreviewImageProps>`
     border-radius: 10px;
 `
