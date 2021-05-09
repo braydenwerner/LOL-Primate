@@ -6,7 +6,7 @@ import { StyledGridContainer, CenterContainer } from '../../../styles/constantSt
 
 export const PreviewSummary: React.FC = () => {
     const notSmallScreen = useMediaQuery('(min-width: 1050px)')
-    const gridAdjust = useMediaQuery('(min-width: 945px)')
+    const gridAdjust = useMediaQuery('(min-width: 1028px)')
     const notMobile = useMediaQuery('(min-width: 550px)')
 
     if (notMobile) {
@@ -20,10 +20,9 @@ export const PreviewSummary: React.FC = () => {
                         container
                         direction="row"
                         justify="center"
-                        spacing={3}
                     >
-                        <StyledGridContainer item xs style={{ marginBottom: '50px' }}>
-                            <Styled.PreviewImage src="/images/rankedpreview.png" layout='fixed' alt='rankedpreview-img' width={428.5} height={260} />
+                        <StyledGridContainer item xs style={gridAdjust ? { marginLeft: '27px', marginBottom: '50px' } : { marginBottom: '50px' }}>
+                            <Styled.PreviewImage src="/images/rankedpreview.png" layout='fixed' alt='rankedpreview-img' width={488.5} height={261.3} />
                         </StyledGridContainer>
                         <StyledGridContainer item xs style={{ marginBottom: '50px' }}>
                             <Styled.PreviewImage src="/images/previewchampselectjoin.png" layout='fixed' alt='champselectjoin-img' width={428.5} height={260} />
