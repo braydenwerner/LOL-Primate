@@ -75,7 +75,7 @@ export const RoleChampionCard: React.FC<RoleChampionCardProps> = ({
                 <Styled.MostCommonChampIcon
                   width={42}
                   height={42}
-                  style={{ borderRadius: '50px;' }}
+                  style={{ borderRadius: '50px' }}
                   src={`http://ddragon.leagueoflegends.com/cdn/${dataDragonAPIVersion}/img/champion/${mostCommonChampsArr[0][0]}.png`}
                 />
               </Styled.ChampRoleImageContainer>

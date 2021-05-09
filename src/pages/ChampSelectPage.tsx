@@ -122,7 +122,7 @@ const ChampSelectPage: React.FC = () => {
         return
       }
 
-      console.log(summonerObj)
+      // console.log(summonerObj)
       setSummonerData(summonerObj)
 
       //  after the summoner data is collected, get match data for each
@@ -166,12 +166,12 @@ const ChampSelectPage: React.FC = () => {
       //  parse the data to find the current player in the match
       //  then extract the data that is necessary
       const tempSpecificMatchData = await res.json();
-      console.log(tempSpecificMatchData)
+      // console.log(tempSpecificMatchData)
       setSpecificMatchData({ ...tempSpecificMatchData })
     }
 
     const populateMatchData = async () => {
-      console.log(matchOverviewData)
+      // console.log(matchOverviewData)
       const tempMostCommonLanes: MostCommonLanes = {}
       const tempMostCommonChamps: MostCommonChampions = {}
 
@@ -220,7 +220,7 @@ const ChampSelectPage: React.FC = () => {
       }
 
       //  get stats for 6 most recent matches for each player ex. k/d/a
-      console.log(summonerMatches)
+      // console.log(summonerMatches)
       querySpecificMatchData(summonerMatches)
 
       setMostCommonLanes(tempMostCommonLanes)
@@ -354,6 +354,7 @@ const LoadingContainer = styled.div`
   margin-right: auto;
   left: 0;
   right: 0;
+  top: 250px;
   width: 150px;
 `
 
