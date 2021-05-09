@@ -22,11 +22,11 @@ export const PreviewWrapper = styled.div<PreviewWrapperProps>`
         if (props.notSmallScreen) return '1000px'
         else if (!props.notSmallScreen) return '95%'
     }};
-    z - index: 5;
+    z-index: 5;
 `
 
 export const PreviewTitle = styled.div`
-    font-family: Varela;
+    font-family: Newsreader;
     font-size: 23px;
     font-weight: 500;
     margin: 3px 0px 3px 0px;

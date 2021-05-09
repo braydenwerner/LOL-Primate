@@ -343,6 +343,7 @@ const InputContainer = styled.div<InputContainerProps>`
   width: ${props => props.largeScreen ? '800px' : '97%'};
   background-color: ${props => props.theme.inputBackground};
   border: 2px solid ${props => props.theme.inputBorder};
+  border-radius: 5px;
 `
 
 const InputContainerTitle = styled.div`
@@ -352,11 +353,14 @@ const InputContainerTitle = styled.div`
 `
 
 const InputContainerLink = styled.span`
+  position: relative;
+  bottom: 1px;
   color: ${commonColors.red};
   cursor: pointer;
   margin-left: 5px;
   text-decoration: underline;
   font-style: underline;
+  font-size: 22px;
 `
 
 const StyledTextField = styled.textarea`
@@ -365,11 +369,10 @@ const StyledTextField = styled.textarea`
   margin-top: 5px;
   padding-top: 5px;
   box-sizing: border-box;
-  border: 1px solid ${(props) =>
-    props.theme.inputBorder};
-  background-color: ${(props) =>
-    props.theme.inputBackground};
-    resize: none;
+  border: 0px solid ${(props) => props.theme.inputBorder};
+  background-color: ${(props) => props.theme.inputBackground};
+  border-top: 1px solid ${props => props.theme.inputBorder};
+  resize: none;
   color: white;
   outline: none;
   font-family: Newsreader;
