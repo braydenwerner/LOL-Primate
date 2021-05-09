@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
-import { CombSpinner, GuardSpinner, ImpulseSpinner, WaveSpinner } from 'react-spinners-kit'
+import { ImpulseSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
 
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { SummonerStats } from '../components/modules/index'
 import { convertChampId, getAPIVersion } from '../util/convertChampId'
 import { URL } from '../config/config'
+import { PreviewSummary } from '../components/elements/index'
 
 export interface SummonerData {
   [id: string]: Summoner
@@ -298,13 +298,15 @@ const ChampSelectPage: React.FC = () => {
           placeholder={`xtremesoccer2012 joined the lobby\narotheawesome joined the lobby\nmineturtle20 joined the lobby\nlokimonsta joined the lobby\nplacerwiz joined the lobby`
           }
         />
-        {isLoaded && (
+        {isLoaded ? (
           <SummonerStats
             summonerData={summonerData}
             mostCommonLanes={mostCommonLanes}
             mostCommonChampions={mostCommonChampions}
             specificMatchData={specificMatchData}
           />
+        ) : (
+          <PreviewSummary />
         )}
       </Wrapper>
     </>
@@ -347,11 +349,11 @@ const StyledTextField = styled.textarea<StyledTextFieldProps>`
 `
 
 const LoadingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  top: 175px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 150px;
 `
 
