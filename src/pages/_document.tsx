@@ -8,6 +8,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
           <link href="https://fonts.googleapis.com/css2?family=Newsreader&display=swap" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
         </Head>
