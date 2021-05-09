@@ -9,17 +9,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     //  have to initialize here, SSR does not work with analytics; no window available
     if (process.env.NODE_ENV === 'production') {
-      analytics().logEvent('screen_view');
+      //  log when a user views the page in production
+      const logEvent = () => {
+        analytics().logEvent('screen_view');
+      }
+
+      logEvent();
     }
-
-    //  log when a user views the page in production
-    const logEvent = () => {
-      analytics().logEvent('screen_view');
-    };
-
-    //For First Page
-    logEvent();
-
     // Remove the server-side injected CSS.
     const jssStyles: Element | null = document.querySelector('#jss-server-side');
     if (jssStyles) {
