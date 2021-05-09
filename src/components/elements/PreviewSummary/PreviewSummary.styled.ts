@@ -12,6 +12,7 @@ export const PreviewWrapper = styled.div<PreviewWrapper>`
     justify-content: center;
     align-items: center;
     text-align: center;
+    opacity: .97;
     background-color: ${props => props.theme.inputBackground};
     border: 3px solid ${props => props.theme.inputBorder};
     border-radius: 10px;

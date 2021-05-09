@@ -48,7 +48,6 @@ export const handleSpecificMatchOverviews = async (
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    console.log(req.body)
     if (!req.body || !req.body.summonerMatches || !req.body.summonerId)
         return res.status(400)
 
