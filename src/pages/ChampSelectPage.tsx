@@ -149,23 +149,24 @@ const ChampSelectPage: React.FC = () => {
     if (summonerNames.length === 5) querySummonerData(summonerNames)
   }, [summonerNames])
 
-  //  if the match data exists for each player, calculate most common champs,
-  //  most common roles,
-  //  ex: mostCommonChampions[id] = {2: 9, 5: 4} -> champion of id 2, played 9 times
   useEffect(() => {
+    //  query last 5 matches player by player
     const querySpecificMatchData = async (summonerMatches: { [id: string]: Array<number> }) => {
-      const res = await fetch(`${URL}/getSpecificMatchOverview`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ summonerMatches }),
-      })
+      const tempSpecificMatchData: SpecificMatchData = {}
+      for (const summonerId in summonerMatches) {
+        const res = await fetch(`${URL}/getSpecificMatchOverview`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ summonerId: summonerId, summonerMatches: summonerMatches[summonerId] }),
+        })
+        tempSpecificMatchData[summonerId] = await res.json();
+      }
 
       //  parse the data to find the current player in the match
       //  then extract the data that is necessary
-      const tempSpecificMatchData = await res.json();
       // console.log(tempSpecificMatchData)
       setSpecificMatchData({ ...tempSpecificMatchData })
     }

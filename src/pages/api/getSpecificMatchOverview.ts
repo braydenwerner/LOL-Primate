@@ -18,42 +18,42 @@ const getMatchOverview = async (matchId: string) => {
 }
 
 export const handleSpecificMatchOverviews = async (
+    summonerId: string,
     summonerMatches: any,
 ) => {
-    const specificMatchData: any = {};
-    for (const summonerId in summonerMatches) {
-        const tempMatchData = []
+    const tempMatchData = []
 
-        for (const matchId of summonerMatches[summonerId]) {
-            const specificMatch = await getMatchOverview(matchId)
-            if (!specificMatch) continue;
+    for (const matchId of summonerMatches) {
+        const specificMatch = await getMatchOverview(matchId)
+        if (!specificMatch) continue;
 
-            const participantObj = specificMatch.participantIdentities.find((p: any) => p.player.accountId === summonerId)
-            if (!participantObj) continue;
+        const participantObj = specificMatch.participantIdentities.find((p: any) => p.player.accountId === summonerId)
+        if (!participantObj) continue;
 
-            //  subtract 1, api starts counting from 1-10 players in game
-            const participantNum = participantObj.participantId - 1
-            const summonerMatchStats = specificMatch.participants[participantNum]
-            if (!summonerMatchStats) continue;
+        //  subtract 1, api starts counting from 1-10 players in game
+        const participantNum = participantObj.participantId - 1
+        const summonerMatchStats = specificMatch.participants[participantNum]
+        if (!summonerMatchStats) continue;
 
-            tempMatchData.push({
-                "champion": await convertChampId(summonerMatchStats.championId),
-                "kills": summonerMatchStats.stats.kills,
-                "deaths": summonerMatchStats.stats.deaths,
-                "assists": summonerMatchStats.stats.assists,
-                "win": summonerMatchStats.stats.win
-            })
-        }
-        specificMatchData[summonerId] = tempMatchData;
+        tempMatchData.push({
+            "champion": await convertChampId(summonerMatchStats.championId),
+            "kills": summonerMatchStats.stats.kills,
+            "deaths": summonerMatchStats.stats.deaths,
+            "assists": summonerMatchStats.stats.assists,
+            "win": summonerMatchStats.stats.win
+        })
     }
-    return specificMatchData
+    console.log(tempMatchData)
+    return tempMatchData;
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    if (!req.body || !req.body.summonerMatches)
+    console.log(req.body)
+    if (!req.body || !req.body.summonerMatches || !req.body.summonerId)
         return res.status(400)
 
     const specificMatches = await handleSpecificMatchOverviews(
+        req.body.summonerId,
         req.body.summonerMatches,
     )
     console.log(count)
