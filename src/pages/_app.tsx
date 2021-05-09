@@ -1,16 +1,31 @@
-import React from 'react'
+import { useEffect } from 'react'
 import type { AppProps /*, AppContext */ } from 'next/app'
 import { AppProvider } from '../providers/AppProvider'
 import Head from 'next/head';
 
+import { analytics } from '../config/firebaseConfig'
+
 function MyApp({ Component, pageProps }: AppProps) {
-  React.useEffect(() => {
+  useEffect(() => {
+    //  have to initialize here, SSR does not work with analytics; no window available
+    if (process.env.NODE_ENV === 'production') {
+      analytics().logEvent('screen_view');
+    }
+
+    //  log when a user views the page in production
+    const logEvent = () => {
+      analytics().logEvent('screen_view');
+    };
+
+    //For First Page
+    logEvent();
+
     // Remove the server-side injected CSS.
     const jssStyles: Element | null = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement?.removeChild(jssStyles);
     }
-  }, []);
+  }, [])
 
   return (
     <>

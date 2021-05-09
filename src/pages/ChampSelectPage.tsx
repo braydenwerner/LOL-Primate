@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { ImpulseSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
 
+import { firestore, db } from '../config/firebaseConfig'
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { SummonerStats } from '../components/modules/index'
 import { convertChampId, getAPIVersion } from '../util/convertChampId'
@@ -147,7 +148,15 @@ const ChampSelectPage: React.FC = () => {
       const matchDataObj = await res.json()
       setMatchOverviewData(matchDataObj)
     }
-    if (summonerNames.length === 5) querySummonerData(summonerNames)
+    if (summonerNames.length === 5) {
+      querySummonerData(summonerNames)
+
+      //  update firestore search counter using firestore increment feature
+      if (process.env.NODE_ENV === 'production') {
+        const docRef = db.collection('totalSearches').doc('totalSearches')
+        docRef.update({ totalSearches: firestore.FieldValue.increment(1) })
+      }
+    }
   }, [summonerNames])
 
   useEffect(() => {
