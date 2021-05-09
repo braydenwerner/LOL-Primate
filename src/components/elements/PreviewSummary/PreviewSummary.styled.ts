@@ -18,8 +18,7 @@ export const PreviewWrapper = styled.div<PreviewWrapperProps>`
     border-radius: 10px;
     width: ${(props) => {
         if (!props.gridAdjust) return '500px'
-
-        if (props.notSmallScreen) return '1000px'
+        else if (props.notSmallScreen) return '1000px'
         else if (!props.notSmallScreen) return '95%'
     }};
     z-index: 5;

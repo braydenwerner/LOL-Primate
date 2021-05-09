@@ -355,6 +355,7 @@ const InputContainerTitle = styled.div`
 const InputContainerLink = styled.span`
   position: relative;
   bottom: 1px;
+  left: 1px;
   color: ${commonColors.red};
   cursor: pointer;
   margin-left: 5px;
