@@ -85,6 +85,7 @@ export interface SpecificMatch {
 }
 
 const ChampSelectPage: React.FC = () => {
+  const [isInvalidFormat, setIsInvalidFormat] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [summonerNames, setSummonerNames] = useState<string[]>([])
@@ -246,7 +247,10 @@ const ChampSelectPage: React.FC = () => {
   const handleTextChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    if (!e.target.value) return
+    if (!e.target.value) {
+      setIsInvalidFormat(false)
+      return;
+    }
 
     const value = e.target.value
     const parsedSummonerNames = []
@@ -268,23 +272,28 @@ const ChampSelectPage: React.FC = () => {
             currentSummonerName += word + ' '
           }
         } else {
-          alert('Invalid format')
+          setIsInvalidFormat(true)
           return
         }
         //  assume that the user just entered a username
       } else {
+        setIsInvalidFormat(true)
         for (const word of words) {
           currentSummonerName += word + ' '
         }
       }
 
       currentSummonerName.trimEnd()
-      parsedSummonerNames.push(currentSummonerName)
+      if (currentSummonerName.replace(/ /g, "").length > 0)
+        parsedSummonerNames.push(currentSummonerName)
     }
 
     if (parsedSummonerNames.length === 5) {
       e.target.value = ''
+      setIsInvalidFormat(false)
       setSummonerNames(parsedSummonerNames)
+    } else {
+      setIsInvalidFormat(true)
     }
   }
 
@@ -310,6 +319,7 @@ const ChampSelectPage: React.FC = () => {
         <InputContainer largeScreen={largeScreen}>
           <InputContainerTitle>Copy and paste below or try with
             <InputContainerLink onClick={handleRandomSummonersClick}>random summoner names</InputContainerLink>
+            {isInvalidFormat && <InvalidContainer style={{ alignSelf: 'flex-end' }}>Invalid Format</InvalidContainer>}
           </InputContainerTitle>
           <StyledTextField
             onChange={handleTextChange}
@@ -371,6 +381,11 @@ const InputContainerLink = styled.span`
   text-decoration: underline;
   font-style: underline;
   font-size: 22px;
+`
+
+const InvalidContainer = styled.div`
+  color: red;
+  margin-top: 10px;
 `
 
 const StyledTextField = styled.textarea`

@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       logEvent();
     }
+
     // Remove the server-side injected CSS.
     const jssStyles: Element | null = document.querySelector('#jss-server-side');
     if (jssStyles) {
