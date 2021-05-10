@@ -4,6 +4,7 @@ const theme = {
   light: {
     background: '#0A162B',
     secondary: '#1E2328',
+    secondaryDark: '#0d0d0d',
     primaryText: 'black',
     contrastBackground: '#cc3399',
     contrastText: '#EAEAEA',
@@ -13,6 +14,7 @@ const theme = {
   dark: {
     background: '#0A162B',
     secondary: '#1E2328',
+    secondaryDark: '#0d0d0d',
     primaryText: 'white',
     contrastBackground: '#EAEAEA',
     contrastText: '#181A1B',

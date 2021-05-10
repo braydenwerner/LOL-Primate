@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { config, useSpring, animated } from 'react-spring'
 import { Grid } from '@material-ui/core'
+import { IoMdCopy } from 'react-icons/io'
 
 import {
   RoleChampionCard,
@@ -12,11 +13,10 @@ import {
   MostCommonLanes,
   MostCommonChampions,
   SpecificMatchData,
-  Summoner,
 } from '../../../pages/ChampSelectPage'
 import * as Styled from './SummonerStats.style'
 import { StyledGridContainer } from '../../../styles/constantStyles'
-import { IoMdCopy } from 'react-icons/io'
+import { commonColors } from '../../../styles/theme'
 
 interface SummonerStatsProps {
   summonerData: SummonerData
@@ -102,5 +102,14 @@ const CopyIcon = styled(IoMdCopy)`
   cursor: pointer;
   border-radius: 50px;
   background-color: ${props => props.theme.secondary};
-  border: 2px solid ${props => props.theme.inputBorder}
+  border: 2px solid ${props => props.theme.inputBorder};
+
+  :hover {
+    background-color: ${props => props.theme.secondaryDark}
+  }
+
+  :active {
+    background-color:${commonColors.red};
+    transform: translateY(4px);
+  }
 `
