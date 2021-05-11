@@ -1,3 +1,3 @@
 const dev = process.env.NODE_ENV !== 'production'
 
-export const URL = dev ? 'http://localhost:3000/api' : `https://lolgorilla.vercel.app/api`
+export const URL = dev ? 'http://localhost:3000/api' : `https://lolprimate.vercel.app/api`
