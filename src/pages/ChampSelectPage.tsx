@@ -122,6 +122,7 @@ const ChampSelectPage: React.FC = () => {
       const summonerObj = await res.json()
       if (summonerObj.error) {
         alert(summonerObj.error)
+        setIsLoading(false)
         return
       }
 
@@ -306,7 +307,7 @@ const ChampSelectPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>LOL Gorilla</title>
+        <title>LOL Primate</title>
         <meta property="og:title" content="LOL Gorilla Home" key="title" />
         <meta name="description" content="Win more games!" />
       </Head>

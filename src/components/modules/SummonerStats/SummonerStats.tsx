@@ -36,10 +36,14 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
 
   const handleCopy = (summonerObjKey: string) => {
     let copyString = ""
-    for (const [key, value] of Object.entries(summonerData[summonerObjKey])) {
+    const summoner = summonerData[summonerObjKey]
+    for (const [key, value] of Object.entries(summoner)) {
       //  no use for copying id
       if (key.toUpperCase().indexOf('ID') >= 0 || key === 'revisionDate' || key === 'queueType' || key === 'summonerName') continue
       copyString += key + ': ' + value + '\n'
+      if (key === 'name' && summoner.wins && summoner.losses) copyString += 'winrate: ' + Math.round(
+        (summoner.wins / (summoner.wins + summoner.losses)) * 10000
+      ) / 100 + '%\n'
     }
     navigator.clipboard.writeText(copyString)
   }

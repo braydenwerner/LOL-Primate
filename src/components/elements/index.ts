@@ -1,4 +1,4 @@
-export { LolGorillaBackground } from './LolGorillaBackground/LolGorillaBackground'
+export { Background } from './Background/Background'
 export { CopyrightContainer } from './CopyrightContainer/CopyrightContainer'
 export { PreviewSummary } from './PreviewSummary/PreviewSummary'
 export { Nav } from './Nav/Nav'
