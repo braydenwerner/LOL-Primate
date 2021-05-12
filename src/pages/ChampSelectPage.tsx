@@ -312,7 +312,7 @@ const ChampSelectPage: React.FC = () => {
         <meta property="og:title" content="LOL Gorilla Home" key="title" />
         <meta name="description" content="Win more games!" />
       </Head>
-      {!isLoading && (
+      {isLoading && (
         <LoadingContainer mediumScreen={mediumScreen}>
           <ImpulseSpinner size={150} />
         </LoadingContainer>
