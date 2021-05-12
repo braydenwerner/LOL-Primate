@@ -303,6 +303,7 @@ const ChampSelectPage: React.FC = () => {
   }
 
   const largeScreen = useMediaQuery('(min-width: 800px)')
+  const mediumScreen = useMediaQuery('(min-width: 600px)')
 
   return (
     <>
@@ -311,8 +312,8 @@ const ChampSelectPage: React.FC = () => {
         <meta property="og:title" content="LOL Gorilla Home" key="title" />
         <meta name="description" content="Win more games!" />
       </Head>
-      {isLoading && (
-        <LoadingContainer>
+      {!isLoading && (
+        <LoadingContainer mediumScreen={mediumScreen}>
           <ImpulseSpinner size={150} />
         </LoadingContainer>
       )}
@@ -410,13 +411,17 @@ const StyledTextField = styled.textarea`
   }
 `
 
-const LoadingContainer = styled.div`
+interface LoadingContainerProps {
+  mediumScreen: boolean
+}
+
+const LoadingContainer = styled.div<LoadingContainerProps>`
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
-  top: 250px;
+  top: ${props => props.mediumScreen ? '250px' : '300px'};
   width: 150px;
 `
 
