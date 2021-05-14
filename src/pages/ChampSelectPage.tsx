@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { NextPage } from 'next'
 import Head from 'next/head'
 import { ImpulseSpinner } from 'react-spinners-kit'
 import styled from 'styled-components'
@@ -84,7 +85,7 @@ export interface SpecificMatch {
   win: boolean,
 }
 
-const ChampSelectPage: React.FC = () => {
+const ChampSelectPage: NextPage = () => {
   const [isInvalidFormat, setIsInvalidFormat] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false)

@@ -31,14 +31,13 @@ export const SummonerStats: React.FC<SummonerStatsProps> = React.memo(({
   mostCommonChampions,
   specificMatchData
 }) => {
-  //  console.log(mostCommonChampions)
+  // console.log(mostCommonChampions)
   // console.log(specificMatchData)
 
   const handleCopy = (summonerObjKey: string) => {
     let copyString = ""
     const summoner = summonerData[summonerObjKey]
     for (const [key, value] of Object.entries(summoner)) {
-      //  no use for copying id
       if (key.toUpperCase().indexOf('ID') >= 0 || key === 'revisionDate' || key === 'queueType' || key === 'summonerName') continue
       copyString += key + ': ' + value + '\n'
       if (key === 'name' && summoner.wins && summoner.losses) copyString += 'winrate: ' + Math.round(
